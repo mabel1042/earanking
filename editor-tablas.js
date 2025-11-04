@@ -376,9 +376,15 @@ function obtenerDatosTabla(tabla) {
                 const span = td.querySelector('span');
                 const texto = span ? span.textContent : td.textContent.trim().replace(/\s+/g, ' ');
                 
-                // Guardar tanto el texto como la URL de la foto
+                // Guardar tanto el texto como la URL de la foto (convertir a ruta relativa)
+                let rutaImagen = img.src;
+                // Convertir URL absoluta a relativa
+                if (rutaImagen.includes('CampeonatoElectronicaimg/')) {
+                    rutaImagen = 'CampeonatoElectronicaimg/' + rutaImagen.split('CampeonatoElectronicaimg/')[1];
+                }
+                
                 filaObj[key] = texto;
-                filaObj[key + '_foto'] = img.src; // Guardar la URL de la foto
+                filaObj[key + '_foto'] = rutaImagen;
             } else {
                 filaObj[key] = td.textContent.trim();
             }

@@ -75,50 +75,77 @@ body {
 }
  /* copa icono */
 .copa-icon {
-  position: relative;
+  position: absolute;
+  top: 8rem;
+  right: 45rem;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  width: 100%;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .copa-icon img {
-  width: clamp(3rem, 10vw, 5rem);
+  width: 5rem;
   height: auto;
-  flex-shrink: 0;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-right: -1rem;
 }
 
 .copa-icon .main-title {
+  font-size: 2rem;
   margin: 0;
-  width: 100%;
+  margin-top: 3rem;
+  margin-left: 1rem;
 }
 
 .copa-icon .pdf-section {
-  width: 100%;
-  margin-top: 0.5rem;
+  display: none;
 }
 
 /* 🔹 Adaptación para móviles */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .copa-icon {
+    position: relative;
+    top: auto;
+    right: auto;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 0.8rem;
     margin-bottom: 1.5rem;
+    width: 100%;
   }
 
   .copa-icon img {
     width: 3.5rem;
+    margin: 0;
   }
-
-  .content {
-    padding: 1rem;
-    margin-top: 5rem;
+  
+  .copa-icon .main-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    margin: 0;
+  }
+  
+  /* Mostrar PDF dentro de copa-icon en móvil */
+  .copa-icon .pdf-section {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+  /* Ocultar PDF separado en móvil */
+  .content > .pdf-section {
+    display: none !important;
   }
   
   .copa-icon .pdf-btn {
     width: 100%;
     text-align: center;
+    margin: 0;
+  }
+
+  .content {
+    padding: 1rem;
+    margin-top: 5rem;
   }
 }
 
@@ -168,6 +195,14 @@ body {
 }
 
 /* 🔹 Botón PDF */
+.pdf-section {
+  display: block;
+}
+
+.copa-icon .pdf-section {
+  display: none;
+}
+
 .pdf-btn {
   display: inline-block;
   background: linear-gradient(135deg, var(--primary-color), var(--light-blue));
@@ -182,8 +217,8 @@ body {
   cursor: pointer;
   border: none;
   margin-top: 10rem;
-  margin-left: 0; /* ← Asegura que esté pegado a la izquierda */
-  align-self: flex-start; /* ← Mantiene a la izquierda */
+  margin-left: 0;
+  align-self: flex-start;
 }
 .pdf-btn:hover {
   background: linear-gradient(135deg, var(--light-blue), var(--secondary-color));

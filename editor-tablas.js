@@ -657,13 +657,22 @@ async function cargarTablaPosicionesDesdeEquipos() {
         // Obtener equipos de Firebase
         const equiposSnap = await getDocs(collection(db, 'equipos'));
         let equipos = [];
+        const equiposVistos = new Set(); // Para evitar duplicados
         
         equiposSnap.forEach(doc => {
             const data = doc.data();
-            equipos.push({
-                nombre: data.nombre,
-                logo: data.logo || 'CampeonatoElectronicaimg/feups2.png'
-            });
+            const nombreNormalizado = normalizarNombreEquipo(data.nombre);
+            
+            // Solo agregar si no es duplicado
+            if (!equiposVistos.has(nombreNormalizado)) {
+                equipos.push({
+                    nombre: data.nombre,
+                    logo: data.logo || 'CampeonatoElectronicaimg/feups2.png'
+                });
+                equiposVistos.add(nombreNormalizado);
+            } else {
+                console.warn(`⚠️ Equipo duplicado ignorado: "${data.nombre}"`);
+            }
         });
         
         // Intentar obtener datos guardados de posiciones

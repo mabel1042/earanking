@@ -779,7 +779,7 @@ body {
   
   .main-title {
     margin-bottom: 5rem;     /* Espaciado inferior */
-    margin-top: 0rem;          /* Espaciado superior */
+    margin-top: -5rem;          /* Espaciado superior */
     padding: 0 1rem;           /* Padding lateral */
     text-align: center; 
   }

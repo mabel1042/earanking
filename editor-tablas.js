@@ -497,7 +497,17 @@ async function poblarTablaConDatos(tablaId, datos) {
                 } else if ((tablaId === 'goleadores' || tablaId === 'sancionados') && key.toLowerCase() === 'jugador') {
                     // Mostrar jugador con foto si existe
                     const nombreJugador = filaObj[key] || '';
-                    const fotoJugador = filaObj[key + '_foto'] || 'CampeonatoElectronicaimg/feups2.png';
+                    let fotoJugador = filaObj[key + '_foto'] || 'CampeonatoElectronicaimg/feups2.png';
+                    
+                    // Limpiar URL: convertir absoluta a relativa
+                    if (fotoJugador.includes('127.0.0.1') || fotoJugador.includes('localhost')) {
+                        if (fotoJugador.includes('CampeonatoElectronicaimg/')) {
+                            fotoJugador = 'CampeonatoElectronicaimg/' + fotoJugador.split('CampeonatoElectronicaimg/')[1];
+                        } else {
+                            fotoJugador = 'CampeonatoElectronicaimg/feups2.png';
+                        }
+                    }
+                    
                     td.innerHTML = `<img src="${fotoJugador}" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:white;">${nombreJugador}</span>`;
                 } else {
                     td.textContent = filaObj[key] || '';

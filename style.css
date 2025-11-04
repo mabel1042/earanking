@@ -803,13 +803,14 @@ body {
   
   .creditos {
     bottom: 5px;
-    max-width: 95%;
+    max-width: 98%;
   }
   
   .creditos p {
-    font-size: 0.6rem;
-    line-height: 1.3;
+    font-size: 0.55rem;
+    line-height: 1.2;
     white-space: normal;
+    letter-spacing: 0.3px;
   }
 }
 

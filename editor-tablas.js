@@ -366,7 +366,7 @@ function obtenerDatosTabla(tabla) {
     // Obtener filas
     const filas = tabla.querySelectorAll('tbody tr');
     filas.forEach(fila => {
-        const celdas = fila.querySelectorAll('td:not([data-no-editable])');
+        const celdas = fila.querySelectorAll('td'); // CAMBIO: Obtener TODAS las celdas
         const filaObj = {};
         celdas.forEach((td, idx) => {
             const key = datos.encabezados[idx] || `col${idx+1}`;
@@ -659,12 +659,17 @@ async function cargarTablaPosicionesDesdeEquipos() {
             const datos = docSnap.data();
             // Crear un mapa de equipos con sus datos
             if (Array.isArray(datos.filas)) {
+                console.log('📊 Datos guardados de posiciones:', datos.filas);
                 datos.filas.forEach(fila => {
                     const nombreEquipo = fila['Equipo'] || fila['equipo'] || '';
-                    datosGuardados[normalizarNombreEquipo(nombreEquipo)] = fila;
+                    const keyNormalizada = normalizarNombreEquipo(nombreEquipo);
+                    console.log(`🔑 Guardando datos para: "${nombreEquipo}" → clave: "${keyNormalizada}"`, fila);
+                    datosGuardados[keyNormalizada] = fila;
                 });
             }
         }
+        
+        console.log('📦 Mapa de datos guardados:', datosGuardados);
         
         // Ordenar equipos por PG (Partidos Ganados) si existe
         equipos.sort((a, b) => {
@@ -680,6 +685,8 @@ async function cargarTablaPosicionesDesdeEquipos() {
             const fila = document.createElement('tr');
             const keyNorm = normalizarNombreEquipo(equipo.nombre);
             const datosEquipo = datosGuardados[keyNorm] || {};
+            
+            console.log(`🏆 Cargando equipo: "${equipo.nombre}" → clave: "${keyNorm}"`, datosEquipo);
             
             // Columna # (no editable)
             const tdNum = document.createElement('td');

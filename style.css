@@ -157,7 +157,7 @@ body {
 
   .content {
     padding: 1rem;
-    margin-top: 5rem;
+    margin-top: 4.5rem;
   }
 }
 
@@ -694,25 +694,41 @@ body {
 /* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.8rem 1rem;
-    flex-wrap: wrap;
+    padding: 0.5rem 0.8rem;
+    flex-wrap: nowrap;
+    gap: 0.3rem;
+  }
+  
+  .navbar .logo img {
+    height: 2.5rem;
   }
   
   .navbar .nav-links {
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
-    order: 3;
-    width: 100%;
+    gap: 0.3rem;
+    order: 2;
+    width: auto;
+    flex: 1;
     justify-content: center;
-    padding: 0.5rem 0;
-    margin-top: 0.5rem;
+    padding: 0;
+    margin: 0;
   }
   
   .navbar .nav-links li a {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.9rem;
-    border-radius: 6px;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  
+  .menu-icon {
+    order: 3;
+  }
+  
+  .menu-icon img {
+    width: 1.5rem;
+    height: 1.5rem;
   }
   
   .menu-toggle {

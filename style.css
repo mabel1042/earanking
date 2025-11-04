@@ -130,8 +130,8 @@ body {
   
   .copa-icon .main-title {
     font-family: "Montserrat", Arial, sans-serif;
-    font-size: clamp(1.8rem, 7vw, 2.5rem);
-    font-weight: 600;
+    font-size: clamp(2.2rem, 7vw, 2.5rem);
+    font-weight: 500;
     margin: 0;
     white-space: nowrap;
     flex: 1;
@@ -778,7 +778,10 @@ body {
   }
   
   .main-title {
-    margin-bottom: 2rem;
+    margin-bottom: 5rem;     /* Espaciado inferior */
+    margin-top: 0rem;          /* Espaciado superior */
+    padding: 0 1rem;           /* Padding lateral */
+    text-align: center; 
   }
   
   #teamsGrid {

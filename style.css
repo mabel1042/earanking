@@ -130,7 +130,7 @@ body {
   
   .copa-icon .main-title {
     font-family: "Montserrat", Arial, sans-serif;
-    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
     font-weight: 600;
     margin: 0;
     white-space: nowrap;

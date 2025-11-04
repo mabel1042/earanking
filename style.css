@@ -75,49 +75,42 @@ body {
 }
  /* copa icono */
 .copa-icon {
-  position: absolute;
-  top: 8rem;        /* distancia desde arriba */
-  right: 45rem;        /* distancia desde la derecha */
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.6rem;        /* espacio entre imagen y texto */
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
 .copa-icon img {
-  width: 5rem;
+  width: clamp(3rem, 10vw, 5rem);
   height: auto;
-  cursor: pointer;
-  margin-top: 1rem;  /* la mueve hacia abajo */
-  margin-right: -1rem;  /* la mueve hacia la izquierda */
-}
-
-.main-title {
-  font-size: 2rem;
-  margin: 0;
+  flex-shrink: 0;
 }
 
 .copa-icon .main-title {
-  margin-top: 3rem;  /* Ajusta esta posición vertical */
-  margin-left: 1rem;  /* Ajusta esta posición horizontal */
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
 }
 
 /* 🔹 Adaptación para móviles */
 @media (max-width: 600px) {
   .copa-icon {
-    top: 10rem;
-    right: 1rem;
-    flex-direction: column;  /* coloca la imagen arriba y el texto abajo */
-    align-items: flex-end;   /* mantiene alineado a la derecha */
-    gap: 0.4rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .copa-icon img {
-    width: 3.5rem;           /* más pequeña en móviles */
+    width: 3.5rem;
   }
 
-  .main-title {
-    font-size: 1.3rem;       /* reduce tamaño del texto */
-    text-align: right;
+  .content {
+    padding: 1rem;
+    margin-top: 5rem;
   }
 }
 
@@ -140,27 +133,30 @@ body {
 }
 
 /* CONTENIDO PRINCIPAL */
-/* CONTENIDO PRINCIPAL */
 .content {
   margin-top: 6rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start; /* ← Cambia a flex-start */
-  padding: 3rem;
+  align-items: flex-start;
+  padding: 2rem 1.5rem;
   min-height: calc(100vh - 6rem);
-  text-align: left; /* ← Cambia a left */
+  text-align: left;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .main-title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 5rem;
-  font-weight: 50;
+  font-size: clamp(2rem, 8vw, 5rem);
+  font-weight: 700;
   color: #fcfcfa;
-  margin: 0 0 2rem 0; /* ← Corrige los márgenes */
+  margin: 0 0 2rem 0;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-  white-space: nowrap; /* ← Esto evita que se divida en varias líneas */
-  line-height: 1.1; /* ← Mejor ajuste de altura */
+  line-height: 1.1;
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
 /* 🔹 Botón PDF */

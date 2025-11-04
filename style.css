@@ -111,30 +111,34 @@ body {
     position: relative;
     top: auto;
     right: auto;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
-    margin-bottom: 1.5rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .copa-icon img {
-    width: 3.5rem;
+    width: 3rem;
     margin: 0;
+    flex-shrink: 0;
   }
   
   .copa-icon .main-title {
-    font-size: clamp(1.8rem, 8vw, 3rem);
+    font-size: clamp(1.3rem, 6vw, 2rem);
     margin: 0;
-    white-space: normal;
-    word-wrap: break-word;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
   }
   
-  /* Mostrar PDF dentro de copa-icon en móvil */
+  /* Mostrar PDF dentro de copa-icon en móvil - nueva línea */
   .copa-icon .pdf-section {
     display: block !important;
     width: 100%;
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
+    order: 3;
   }
   
   /* Ocultar PDF separado en móvil */
@@ -143,10 +147,12 @@ body {
   }
   
   .copa-icon .pdf-btn {
+    display: block !important;
     width: 100%;
     text-align: center;
     margin: 0 !important;
-    padding: 0.8rem 1rem;
+    padding: 0.8rem 1rem !important;
+    font-size: 0.9rem;
   }
 
   .content {

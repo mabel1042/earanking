@@ -168,6 +168,27 @@ body {
   }
 }
 
+/* 🔹 Ajuste para móviles en horizontal (landscape) */
+@media (max-width: 768px) and (orientation: landscape) {
+  .copa-icon {
+    gap: 0.3rem;
+  }
+  
+  .copa-icon img {
+    width: 2.5rem;
+    margin-right: 0.3rem;
+  }
+  
+  .copa-icon .main-title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-left: 0;
+  }
+  
+  .content {
+    margin-top: 3.5rem;
+  }
+}
+
 
 /* ICONO MENÚ */
 .menu-icon {

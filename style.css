@@ -1,0 +1,1047 @@
+/* ESTILO GENERAL */
+:root {
+  --primary-color: #00295e;
+  --secondary-color: #1e90ff;
+  --accent-color: #ffd700;
+  --dark-blue: #091933;
+  --medium-blue: #142850;
+  --light-blue: #2a5298;
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  --border-radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", Arial, sans-serif;
+  background-image: url('CampeonatoElectronicaimg/fondo_futbol.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background: linear-gradient(to bottom, rgb(0, 23, 49), rgba(3, 59, 124, 0));
+  
+}
+
+/* Logo */
+.navbar .logo img {
+  height: 4rem;
+  width: auto;
+}
+
+/* Links */
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar .nav-links li a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.navbar .nav-links li a:hover,
+.navbar .nav-links li a.active {
+  color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.1);
+}
+ /* copa icono */
+.copa-icon {
+  position: absolute;
+  top: 8rem;        /* distancia desde arriba */
+  right: 45rem;        /* distancia desde la derecha */
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;        /* espacio entre imagen y texto */
+}
+
+.copa-icon img {
+  width: 5rem;
+  height: auto;
+  cursor: pointer;
+  margin-top: 1rem;  /* la mueve hacia abajo */
+  margin-right: -1rem;  /* la mueve hacia la izquierda */
+}
+
+.main-title {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.copa-icon .main-title {
+  margin-top: 3rem;  /* Ajusta esta posición vertical */
+  margin-left: 1rem;  /* Ajusta esta posición horizontal */
+}
+
+/* 🔹 Adaptación para móviles */
+@media (max-width: 600px) {
+  .copa-icon {
+    top: 10rem;
+    right: 1rem;
+    flex-direction: column;  /* coloca la imagen arriba y el texto abajo */
+    align-items: flex-end;   /* mantiene alineado a la derecha */
+    gap: 0.4rem;
+  }
+
+  .copa-icon img {
+    width: 3.5rem;           /* más pequeña en móviles */
+  }
+
+  .main-title {
+    font-size: 1.3rem;       /* reduce tamaño del texto */
+    text-align: right;
+  }
+}
+
+
+/* ICONO MENÚ */
+.menu-icon {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon img {
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.menu-icon img:hover {
+  transform: scale(1.1);
+}
+
+/* CONTENIDO PRINCIPAL */
+/* CONTENIDO PRINCIPAL */
+.content {
+  margin-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* ← Cambia a flex-start */
+  padding: 3rem;
+  min-height: calc(100vh - 6rem);
+  text-align: left; /* ← Cambia a left */
+}
+
+.main-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 5rem;
+  font-weight: 50;
+  color: #fcfcfa;
+  margin: 0 0 2rem 0; /* ← Corrige los márgenes */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  white-space: nowrap; /* ← Esto evita que se divida en varias líneas */
+  line-height: 1.1; /* ← Mejor ajuste de altura */
+}
+
+/* 🔹 Botón PDF */
+.pdf-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary-color), var(--light-blue));
+  color: var(--text-light);
+  padding: clamp(0.8rem, 3vw, 1rem) clamp(1.2rem, 4vw, 1.8rem);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  margin-top: 10rem;
+  margin-left: 0; /* ← Asegura que esté pegado a la izquierda */
+  align-self: flex-start; /* ← Mantiene a la izquierda */
+}
+.pdf-btn:hover {
+  background: linear-gradient(135deg, var(--light-blue), var(--secondary-color));
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.pdf-btn:active {
+  transform: translateY(-1px);
+}
+
+/* CRÉDITOS */
+.creditos {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 100;
+}
+
+.creditos p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* MODALES */
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--text-light);
+  padding: clamp(1.2rem, 4vw, 2rem);
+  border-radius: var(--border-radius);
+  width: min(90%, 25rem);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+}
+
+.modal-content h2 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+}
+
+.btn-login {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-color), var(--light-blue));
+  color: var(--text-light);
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, var(--light-blue), var(--secondary-color));
+  transform: translateY(-2px);
+}
+
+.btn-close {
+  width: 100%;
+  background: #6c757d;
+  color: var(--text-light);
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.8rem;
+}
+
+.btn-close:hover {
+  background: #5a6268;
+}
+
+/* SECCIÓN EQUIPOS */
+#equiposSection {
+  background-color: var(--dark-blue);
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem);
+  min-height: 100vh;
+}
+
+#equiposSection h1 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-light);
+  font-size: clamp(2rem, 6vw, 3rem);
+  text-align: center; /* ← Puedes cambiar a left, right */
+  margin-bottom: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 500;
+  
+  /* AGREGA ESTAS PROPIEDADES PARA MOVERLO: */
+  margin-top: 3rem; /* ↑ Controla espacio arriba */
+  margin-left: 2rem; /* → Mueve a la derecha */
+  margin-right: 2rem; /* ← Mueve a la izquierda */
+}
+
+/* 🔹 Botón "Agregar Equipo" */
+.btn-agregar {
+  background: linear-gradient(135deg, var(--primary-color), var(--light-blue));
+  color: var(--text-light);
+  padding: clamp(0.7rem, 2vw, 0.9rem) clamp(1rem, 3vw, 1.5rem);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  margin: 0 auto clamp(2rem, 5vw, 3rem) auto;
+  box-shadow: var(--shadow);
+}
+
+.btn-agregar:hover {
+  background: linear-gradient(135deg, var(--light-blue), var(--secondary-color));
+  transform: translateY(-2px);
+}
+
+/* Grid de equipos */
+#teamsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: clamp(1rem, 3vw, 1.5rem);
+  padding: 0 1rem;
+}
+
+.team-card {
+  background-color: var(--medium-blue);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.team-card-header {
+  background: linear-gradient(135deg, var(--secondary-color), var(--light-blue));
+  color: var(--text-light);
+  padding: clamp(0.8rem, 2vw, 1rem);
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+}
+
+.team-card-header .player-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.team-card-header .player-icon:hover {
+  transform: scale(1.1);
+}
+
+.team-card-content {
+  display: flex;
+  align-items: center;
+  padding: clamp(1rem, 2vw, 1.2rem);
+  gap: clamp(0.8rem, 2vw, 1rem);
+}
+
+.team-card-content .logo {
+  width: clamp(3rem, 10vw, 4rem);
+  height: clamp(3rem, 10vw, 4rem);
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--text-light);
+  flex-shrink: 0;
+}
+
+.team-card-content .team-info {
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+}
+
+/* SECCIÓN TORNEO */
+#torneoSection {
+  background-color: var(--dark-blue);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  min-height: 100vh;
+}
+
+#torneoSection h1 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-light);
+  font-size: clamp(2rem, 6vw, 3rem);
+  text-align: center; /* ← Puedes cambiar a left, right */
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 500;
+  
+  /* AGREGA ESTAS PROPIEDADES PARA MOVERLO: */
+  margin-top: 4rem;    /* ↑ Controla espacio arriba */
+  margin-left: 2rem;   /* → Mueve a la derecha */
+  margin-right: 2rem;  /* ← Mueve a la izquierda */
+}
+
+/* 🔹 ACORDEÓN TORNEO */
+.accordion-btn {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 2vw, 1rem);
+  width: 100%;
+  padding: clamp(1rem, 3vw, 1.2rem) clamp(1.2rem, 3vw, 1.5rem);
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: var(--text-light);
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--light-blue), var(--secondary-color));
+  transition: all 0.3s ease;
+  border-radius: var(--border-radius);
+  margin-bottom: clamp(0.5rem, 1.5vw, 0.8rem);
+  box-shadow: var(--shadow);
+}
+
+.accordion-btn:hover {
+  background: linear-gradient(135deg, var(--secondary-color), #0077ff);
+  transform: translateY(-2px);
+}
+
+.accordion-btn.active {
+  background: linear-gradient(135deg, var(--secondary-color), #0066cc);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.accordion-btn.active .accordion-icon {
+  transform: rotate(180deg);
+}
+
+.accordion-icon {
+  width: clamp(1.5rem, 4vw, 2rem);
+  height: clamp(1.5rem, 4vw, 2rem);
+  transition: transform 0.3s ease;
+}
+
+.accordion-content {
+  background: linear-gradient(135deg, var(--medium-blue), #1a3a7a);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+  margin-bottom: clamp(0.8rem, 2vw, 1rem);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.accordion-content table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-light);
+  margin: 0;
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
+  table-layout: fixed; /* ← Hace que las columnas sean del mismo tamaño */
+}
+
+.accordion-content th {
+  background: linear-gradient(135deg, var(--secondary-color), #0077ff);
+  color: var(--text-light);
+  padding: clamp(0.8rem, 2vw, 1rem);
+  text-align: left;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  width: auto; /* ← Distribuye el ancho equitativamente */
+}
+
+.accordion-content td {
+  padding: clamp(0.7rem, 2vw, 0.9rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  width: auto; /* ← Distribuye el ancho equitativamente */
+}
+
+.accordion-content tr:hover td {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.accordion-content tr:last-child td {
+  border-bottom: none;
+}
+
+/* Botón editar tabla */
+.btn-editar-tabla {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 1rem;
+  box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-editar-tabla:hover {
+  background: linear-gradient(135deg, #218838, #1aa179);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+}
+
+.btn-editar-tabla:active {
+  transform: translateY(0);
+}
+
+/* Estilos específicos para tabla de posiciones */
+#tablaPosiciones {
+  table-layout: auto !important; /* Permitir ancho variable */
+}
+
+#tablaPosiciones th:nth-child(1),
+#tablaPosiciones td:nth-child(1) {
+  width: 3%; /* Columna # */
+  text-align: center;
+}
+
+#tablaPosiciones th:nth-child(2),
+#tablaPosiciones td:nth-child(2) {
+  width: 25%; /* Columna Equipo - más ancha */
+}
+
+#tablaPosiciones th:nth-child(n+3),
+#tablaPosiciones td:nth-child(n+3) {
+  width: 9%; /* Resto de columnas - mismo tamaño */
+  text-align: center;
+}
+
+/* TABLAS JUGADORES Y FORMULARIOS */
+#tablaJugadores {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+}
+
+#tablaJugadores th, #tablaJugadores td {
+  border: 1px solid #ccc;
+  padding: clamp(0.5rem, 1.5vw, 0.7rem);
+  text-align: center;
+  color: var(--text-dark);
+}
+
+#tablaJugadores th {
+  background: linear-gradient(135deg, var(--secondary-color), var(--light-blue));
+  color: var(--text-light);
+}
+
+#tablaJugadores img {
+  display: block;
+  margin: 0 auto;
+  width: clamp(2.5rem, 8vw, 3rem);
+  height: clamp(2.5rem, 8vw, 3rem);
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* FORMULARIOS */
+#formJugador, #formEquipo {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+#formJugador div, #formEquipo div {
+  margin-bottom: clamp(0.8rem, 2vw, 1rem);
+}
+
+#formJugador label, #formEquipo label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+#formJugador input, #formEquipo input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+#formJugador input:focus, #formEquipo input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+}
+
+/* MENÚ HAMBURGUESA PARA MÓVIL */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: var(--text-light);
+  margin: 3px 0;
+  transition: 0.3s;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+  
+  .navbar .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--dark-blue);
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0;
+  }
+  
+  .navbar .nav-links.active {
+    display: flex;
+  }
+  
+  .navbar .nav-links li {
+    width: 100%;
+  }
+  
+  .navbar .nav-links li a {
+    display: block;
+    padding: 0.8rem;
+    border-radius: 6px;
+  }
+  
+  .menu-toggle {
+    display: flex;
+  }
+  
+  .content {
+    margin-top: 4rem;
+    padding: 1.5rem 1rem;
+  }
+  
+  .team-card-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .accordion-content table {
+    font-size: 0.8rem;
+  }
+  
+  .accordion-content th,
+  .accordion-content td {
+    padding: 0.6rem 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar .logo img {
+    height: 2rem;
+  }
+  
+  .menu-icon img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .main-title {
+    margin-bottom: 2rem;
+  }
+  
+  #teamsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    padding: 1.2rem;
+    width: 95%;
+  }
+}
+
+/* ESTADOS DE CARGA Y VACÍO */
+.loading {
+  text-align: center;
+  color: var(--text-light);
+  padding: 2rem;
+  font-style: italic;
+}
+
+.empty-state {
+  text-align: center;
+  color: #ccc;
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* UTILIDADES */
+.text-center { text-align: center; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.hidden { display: none; }
+
+/* Estilos para el editor */
+/* ESTILOS PARA EL EDITOR DE TABLAS */
+.controles-edicion {
+    margin: 15px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px solid #007bff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.controles-superiores {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.controles-inferiores {
+    display: flex;
+    gap: 10px;
+}
+
+.controles-edicion button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.controles-edicion button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Estilos para celdas en edición */
+td[editando], th[editando] {
+    background-color: #fff3cd !important;
+    border: 2px solid #ffc107 !important;
+    outline: none;
+    min-width: 80px;
+}
+
+td[editando]:focus, th[editando]:focus {
+    background-color: #fff !important;
+    border-color: #007bff !important;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+/* Mantener estilos especiales durante edición */
+.numero-posicion[editando] {
+    background-color: #e9ecef !important;
+    border: 1px solid #ced4da !important;
+    text-align: center;
+    font-weight: bold;
+}
+
+.columna-posicion[editando] {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Estilos para tabla de posiciones */
+.numero-posicion {
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa !important;
+    color: #00295e;
+}
+
+.columna-posicion {
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Proteger columnas durante edición */
+td.numero-posicion[editando], 
+td.columna-posicion[editando] {
+    background-color: #e9ecef !important;
+    border: 1px solid #ced4da !important;
+    color: #6c757d !important;
+    cursor: not-allowed;
+}
+
+/* 🔹 BOTONES DE EDICIÓN - VERSIÓN CORREGIDA */
+.controles-edicion {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 0.5rem;
+    border: 0.125rem solid #007bff;
+    box-shadow: 0 0.125rem 0.625rem rgba(0,0,0,0.1);
+}
+
+.controles-superiores {
+    display: flex;
+    gap: 0.625rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.controles-inferiores {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+}
+
+.controles-edicion button {
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    min-width: auto;
+    white-space: nowrap;
+}
+
+.controles-edicion button:hover {
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.2);
+}
+
+.controles-edicion button:active {
+    transform: translateY(0);
+}
+
+/* Estilos específicos para botones de guardar y cancelar */
+.btn-guardar { 
+    background: #007bff; 
+    color: white; 
+    font-weight: bold;
+    padding: 0.625rem 1.25rem;
+}
+
+.btn-agregar-fila {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+}
+
+.btn-agregar-fila:hover {
+    background: #218838;
+}
+
+.btn-cancelar { 
+    background: #6c757d; 
+    color: white;
+    padding: 0.625rem 1.25rem;
+}
+
+.btn-guardar:hover { 
+    background: #0056b3;
+}
+
+.btn-cancelar:hover { 
+    background: #545b62;
+}
+
+/* Mensaje informativo en controles superiores */
+.controles-superiores p {
+    margin: 0;
+    color: #666;
+    font-style: italic;
+    font-size: 0.875rem;
+    padding: 0.5rem 0;
+}
+
+/* Responsive para controles */
+@media (max-width: 768px) {
+    .controles-edicion {
+        padding: 0.75rem;
+        margin: 0.75rem 0;
+    }
+    
+    .controles-superiores,
+    .controles-inferiores {
+        gap: 0.5rem;
+    }
+    
+    .controles-edicion button {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn-guardar,
+    .btn-cancelar {
+        padding: 0.5rem 1rem;
+    }
+    
+    .controles-superiores p {
+        font-size: 0.8rem;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .controles-inferiores {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .controles-inferiores button {
+        width: 100%;
+    }
+    
+    .controles-edicion {
+        padding: 0.625rem;
+    }
+}
+/* Contenedor general de horarios */
+#horariosEditables {
+  background: #f7f8fa;
+  border-radius: 16px;
+  padding: 24px 32px;
+  max-width: 700px;
+  margin: 32px auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Cada fila de partido */
+.horario-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* Horario (hora) */
+.horario-hora,
+.horario-fecha {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #222;
+  width: 70px;
+  border: none;
+  background: transparent;
+  text-align: right;
+  margin-right: 18px;
+}
+
+/* Equipos y logos */
+.horario-equipos {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1;
+  justify-content: center;
+}
+
+.horario-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  border: 2px solid #e5e7eb;
+  margin: 0 8px;
+}
+
+.horario-nombre {
+  font-weight: 500;
+  color: #222;
+  font-size: 1.05rem;
+}
+
+.horario-vs {
+  font-weight: bold;
+  color: #2d6cdf;
+  margin: 0 10px;
+  font-size: 1.1rem;
+}
+
+
+/* Botón guardar */
+.btn-guardar-horario {
+  background: #2d6cdf;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-left: 18px;
+}
+
+.btn-guardar-horario:hover {
+  background: #1a4fa3;
+}

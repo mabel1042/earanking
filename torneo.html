@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torneo | EARanking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="CampeonatoElectronicaimg/feups2.png" alt="Logo Universidad">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="torneo.html" class="active">Torneo</a></li>
+      <li><a href="equipos.html">Equipos</a></li>
+    </ul>
+    <div class="menu-icon" id="loginBtn">
+      <img src="CampeonatoElectronicaimg/iniciar_sesion.png" alt="Iniciar sesión">
+    </div>
+  </nav>
+
+  <!-- Contenido del Torneo -->
+  <section id="torneoSection">
+    <h1>TORNEO</h1>
+
+    <div class="accordion">
+      <!-- Posiciones -->
+      <button class="accordion-btn">
+        <img src="CampeonatoElectronicaimg/posiciones.png" class="accordion-icon" alt="icono">
+        Posiciones
+      </button>
+      <div class="accordion-content">
+        <!-- BOTÓN EDITAR (solo visible para admin) -->
+        <button class="btn-editar-tabla" data-tabla="posiciones" style="display: none;">
+          ✏️ Editar Tabla
+        </button>
+        <table id="tablaPosiciones">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Equipo</th>
+              <th>PJ</th>
+              <th>PG</th>
+              <th>PE</th>
+              <th>PP</th>
+              <th>GF</th>
+              <th>GC</th>
+              <th>Puntos</th>
+              <th>GD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Se rellenará dinámicamente -->
+          </tbody>
+        </table>
+
+      </div>
+
+      <!-- Horarios -->
+      <button class="accordion-btn">
+        <img src="CampeonatoElectronicaimg/horarios.png" class="accordion-icon" alt="icono">
+        Horarios
+      </button>
+      <div class="accordion-content">
+        <!-- BOTÓN EDITAR (solo visible para admin) -->
+        <button class="btn-editar-tabla" data-tabla="horarios" style="display: none;">
+          ✏️ Editar Tabla
+        </button>
+        <table id="tablaHorarios">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Partido</th>
+              <th>Hora</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Resultados -->
+      <button class="accordion-btn">
+        <img src="CampeonatoElectronicaimg/resultados.png" class="accordion-icon" alt="icono">
+        Resultados
+      </button>
+      <div class="accordion-content">
+        <!-- BOTÓN EDITAR (solo visible para admin) -->
+        <button class="btn-editar-tabla" data-tabla="resultados" style="display: none;">
+          ✏️ Editar Tabla
+        </button>
+        <table id="tablaResultados">
+          <thead>
+            <tr>
+              <th>Partido</th>
+              <th>Resultado</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Goleadores -->
+      <button class="accordion-btn">
+        <img src="CampeonatoElectronicaimg/goleadores.png" class="accordion-icon" alt="icono">
+        Goleadores
+      </button>
+      <div class="accordion-content">
+        <!-- BOTÓN EDITAR (solo visible para admin) -->
+        <button class="btn-editar-tabla" data-tabla="goleadores" style="display: none;">
+          ✏️ Editar Tabla
+        </button>
+        <table id="tablaGoleadores">
+          <thead>
+            <tr>
+              <th>Jugador</th>
+              <th>Equipo</th>
+              <th>Goles</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Sancionados -->
+      <button class="accordion-btn">
+        <img src="CampeonatoElectronicaimg/sanciones.png" class="accordion-icon" alt="icono">
+        Sancionados
+      </button>
+      <div class="accordion-content">
+        <!-- BOTÓN EDITAR (solo visible para admin) -->
+        <button class="btn-editar-tabla" data-tabla="sancionados" style="display: none;">
+          ✏️ Editar Tabla
+        </button>
+        <table id="tablaSancionados">
+          <thead>
+            <tr>
+              <th>Jugador</th>
+              <th>Equipo</th>
+              <th>Motivo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Login Único (Capitán/Admin) -->
+  <div class="modal-bg" id="loginModal" style="display:none;">
+    <div class="modal-content">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Usuario:</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn-login">Ingresar</button>
+      </form>
+      <button id="loginClose" class="btn-close">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Modal Login (corrigiendo IDs) -->
+  <div class="modal-bg" id="loginModal2" style="display:none;">
+    <div class="modal-content">
+      <h2>Login</h2>
+      <form id="loginForm2">
+        <div class="form-group">
+          <label for="username2">Usuario:</label>
+          <input type="text" id="username2" required>
+        </div>
+        <div class="form-group">
+          <label for="password2">Contraseña:</label>
+          <input type="password" id="password2" required>
+        </div>
+        <button type="submit" class="btn-login">Ingresar</button>
+      </form>
+      <button id="loginClose2" class="btn-close">Cerrar</button>
+    </div>
+  </div>
+
+
+  <!-- Después de tu script actual -->
+  <script type="module" src="script.js"></script>
+  <script type="module" src="editor-tablas.js"></script>
+
+</body>
+</html>

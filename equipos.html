@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipos | EARanking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="CampeonatoElectronicaimg/feups2.png" alt="Logo Universidad">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="torneo.html">Torneo</a></li>
+      <li><a href="equipos.html" class="active">Equipos</a></li>
+    </ul>
+    <div class="menu-icon" id="loginBtn">
+      <img src="CampeonatoElectronicaimg/iniciar_sesion.png" alt="Iniciar sesión">
+    </div>
+  </nav>
+
+  <!-- Sección Equipos -->
+  <section id="equiposSection">
+    <h1>EQUIPOS</h1>
+
+    <!-- Botón agregar equipo (solo capitán logueado) -->
+    <button id="btnAgregarEquipo" class="btn-agregar" style="display: none;">Agregar Equipo</button>
+
+    <!-- Grid de equipos -->
+    <div id="teamsGrid">
+      <p style="color: white; text-align: center;">Cargando equipos...</p>
+    </div>
+  </section>
+
+  <!-- Modal Login -->
+  <div class="modal-bg" id="loginModal" style="display:none;">
+    <div class="modal-content">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Usuario:</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn-login">Ingresar</button>
+      </form>
+      <button id="loginClose" class="btn-close">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Modal Agregar Equipo -->
+  <div class="modal-bg" id="modalEquipo" style="display:none;">
+    <div class="modal-content">
+      <h2>Agregar Equipo</h2>
+      <form id="formEquipo">
+        <div class="form-group">
+          <label for="nombreEquipo">Nombre del Equipo:</label>
+          <input type="text" id="nombreEquipo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="abreviaturaEquipo">Abreviatura:</label>
+          <input type="text" id="abreviaturaEquipo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dirigenteEquipo">Dirigente:</label>
+          <input type="text" id="dirigenteEquipo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="logoEquipo">Logo:</label>
+          <input type="file" id="logoEquipo" accept="image/*" required>
+        </div>
+
+        <button type="submit" class="btn-login">Guardar Equipo</button>
+      </form>
+      <button id="closeModalEquipo" class="btn-close">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Modal Ver Jugadores -->
+  <div class="modal-bg" id="modalJugadores" style="display:none;">
+    <div class="modal-content">
+      <h2>Jugadores del Equipo</h2>
+
+      <!-- Botón agregar jugador solo visible para capitán -->
+      <button id="btnAgregarJugador" class="btn-agregar" style="display:none;">Agregar Jugador</button>
+
+      <!-- Formulario para agregar jugador -->
+      <form id="formJugador" style="display:none;">
+        <div class="form-group">
+          <label for="nombreJugador">Nombre:</label>
+          <input type="text" id="nombreJugador" placeholder="Nombre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="edadJugador">Edad:</label>
+          <input type="number" id="edadJugador" placeholder="Edad" required>
+        </div>
+
+        <div class="form-group">
+          <label for="numeroJugador">Número:</label>
+          <input type="number" id="numeroJugador" placeholder="Número" required>
+        </div>
+
+        <div class="form-group">
+          <label for="fotoJugador">Foto:</label>
+          <input type="file" id="fotoJugador" accept="image/*">
+        </div>
+
+        <button type="submit" class="btn-login">Agregar jugador</button>
+      </form>
+
+      <!-- Tabla de jugadores -->
+      <table id="tablaJugadores">
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Número</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se agregarán los jugadores dinámicamente -->
+        </tbody>
+      </table>
+
+      <button id="closeModalJugadores" class="btn-close">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="script.js"></script>
+
+</body>
+</html>

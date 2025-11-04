@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EARanking</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="CampeonatoElectronicaimg/feups2.png" alt="Logo Universidad">
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="torneo.html">Torneo</a></li>
+      <li><a href="equipos.html">Equipos</a></li>
+    </ul>
+
+    <div class="menu-icon" id="loginBtn">
+      <img src="CampeonatoElectronicaimg/iniciar_sesion.png" alt="Iniciar sesión">
+    </div>
+  </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+  <main class="content">
+    <div class="copa-icon" id="copaicon">
+      <img src="CampeonatoElectronicaimg/copa.png" alt="Copa Maxwell">
+      <h1 class="main-title">COPA MAXWELL</h1>
+    </div>
+    
+    <div class="pdf-section">
+      <a href="Reglamentodocs/reglamento.pdf" class="pdf-btn" target="_blank">📄 Ver Reglamento</a>
+    </div>
+    
+    <footer class="creditos">
+      <p>Desarrollado por Mabel Hidalgo</p>
+    </footer>
+  </main>
+
+
+  <!-- MODAL LOGIN ÚNICO -->
+  <div class="modal-bg" id="loginModal" style="display:none;">
+    <div class="modal-content">
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Usuario:</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn-login">Ingresar</button>
+      </form>
+      <button id="loginClose" class="btn-close">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Script único -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>

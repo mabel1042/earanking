@@ -1,0 +1,13 @@
+{
+"equipos": [
+"Byte FC",
+"Voltaje United",
+"Resistor City",
+"Bit FC"
+],
+"partidos": [
+{ "equipoA": "Byte FC", "equipoB": "Voltaje United", "fecha": "2025-10-25", "resultado": "2-1" },
+{ "equipoA": "Resistor City", "equipoB": "Bit FC", "fecha": "2025-10-26", "resultado": "1-3" },
+{ "equipoA": "Byte FC", "equipoB": "Bit FC", "fecha": "2025-11-02", "resultado": "" }
+]
+}

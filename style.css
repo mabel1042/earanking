@@ -79,7 +79,7 @@ body {
 .copa-icon {
   position: absolute;
   top: 8rem;
-  right: 45rem;
+  right: 54rem;
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -89,16 +89,16 @@ body {
   width: 5rem;
   height: auto;
   cursor: pointer;
-  margin-top: 1rem;
-  margin-right: -1rem;
+  margin-top: -3rem;
+  margin-right: -0.5rem;
 }
 
 .copa-icon .main-title {
   font-family: "Montserrat", Arial, sans-serif;
-  font-size: 3.5rem;
-  font-weight: 300;
+  font-size: 5rem;
+  font-weight: 500;
   margin: -9rem;
-  margin-top: 10Srem;
+  margin-top: -12rem;
   margin-left: 1rem;
   white-space: nowrap;
   line-height: 1.1;

@@ -116,23 +116,25 @@ body {
     right: auto;
     flex-direction: row;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0rem;              /* ← Espacio entre copa y título */
     margin-bottom: 1rem;
     width: 100%;
     flex-wrap: wrap;
   }
 
   .copa-icon img {
-    width: 3rem;
-    margin: 0;
+    width: 3rem;            /* ← Tamaño del ícono de copa */
+    margin: 0;              /* ← Margen del ícono */
+    margin-right: 0.5rem;   /* ← Espacio a la derecha del ícono */
     flex-shrink: 0;
   }
   
   .copa-icon .main-title {
     font-family: "Montserrat", Arial, sans-serif;
-    font-size: clamp(2.2rem, 7vw, 2.5rem);
+    font-size: clamp(2rem, 6vw, 2.5rem);  /* ← Tamaño del título */
     font-weight: 500;
-    margin: 0;
+    margin: 0;              /* ← Margen del título */
+    margin-left: -1.3rem;    /* ← Espacio a la izquierda del título */
     white-space: nowrap;
     flex: 1;
     min-width: 0;
@@ -202,7 +204,7 @@ body {
 .main-title {
   font-family: 'Montserrat', sans-serif;
   font-size: clamp(2rem, 8vw, 5rem);
-  font-weight: 700;
+  font-weight: 500;
   color: #fcfcfa;
   margin: 0 0 2rem 0;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
@@ -778,10 +780,14 @@ body {
   }
   
   .main-title {
-    margin-bottom: 5rem;     /* Espaciado inferior */
-    margin-top: -5rem;          /* Espaciado superior */
-    padding: 0 1rem;           /* Padding lateral */
-    text-align: center; 
+    margin-bottom: 2rem;     /* Espaciado inferior */
+    margin-top: 0rem;        /* Espaciado superior */
+    margin-left: 0;          /* Sin margen izquierdo */
+    margin-right: 0;         /* Sin margen derecho */
+    padding: 0 1rem;         /* Padding lateral para respiración */
+    text-align: center;      /* Centrado */
+    max-width: 100%;         /* No exceder el ancho de pantalla */
+    overflow-wrap: break-word; /* Romper palabras largas si es necesario */
   }
   
   #teamsGrid {

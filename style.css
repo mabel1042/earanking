@@ -92,10 +92,13 @@ body {
 }
 
 .copa-icon .main-title {
-  font-size: 2rem;
+  font-size: 5rem;
+  font-weight: 700;
   margin: 0;
   margin-top: 3rem;
   margin-left: 1rem;
+  white-space: nowrap;
+  line-height: 1.1;
 }
 
 .copa-icon .pdf-section {
@@ -121,13 +124,15 @@ body {
   }
   
   .copa-icon .main-title {
-    font-size: clamp(1.5rem, 6vw, 2rem);
+    font-size: clamp(1.8rem, 8vw, 3rem);
     margin: 0;
+    white-space: normal;
+    word-wrap: break-word;
   }
   
   /* Mostrar PDF dentro de copa-icon en móvil */
   .copa-icon .pdf-section {
-    display: block;
+    display: block !important;
     width: 100%;
     margin-top: 0.5rem;
   }
@@ -140,7 +145,8 @@ body {
   .copa-icon .pdf-btn {
     width: 100%;
     text-align: center;
-    margin: 0;
+    margin: 0 !important;
+    padding: 0.8rem 1rem;
   }
 
   .content {

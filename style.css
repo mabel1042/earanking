@@ -71,6 +71,7 @@ body {
 
 .navbar .nav-links li a:hover,
 .navbar .nav-links li a.active {
+  font-family: "Montserrat", Arial, sans-serif;
   color: var(--accent-color);
   background: rgba(255, 255, 255, 0.1);
 }

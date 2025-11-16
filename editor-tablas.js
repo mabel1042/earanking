@@ -1081,6 +1081,7 @@ function cerrarModalJugador() {
 // 🔹 CALCULAR Y ORDENAR TABLA DE POSICIONES
 function calcularYOrdenarPosiciones(tabla) {
     console.log("📊 Calculando PJ, PUNTOS, GD y ordenando tabla de posiciones...");
+    console.log("🔢 Criterios de orden: 1º PUNTOS, 2º GD, 3º GF");
     
     // Obtener índices de columnas
     const encabezados = Array.from(tabla.querySelectorAll('thead th')).map(th => th.textContent.trim());
@@ -1128,21 +1129,35 @@ function calcularYOrdenarPosiciones(tabla) {
         // Guardar valores para ordenamiento
         fila.dataset.puntos = puntos;
         fila.dataset.gd = gd;
+        fila.dataset.gf = gf;
     });
     
-    // Ordenar filas: primero por PUNTOS (descendente), luego por GD (descendente)
+    // Ordenar filas con criterios de desempate:
+    // 1º PUNTOS (descendente)
+    // 2º GD - Gol Diferencia (descendente)
+    // 3º GF - Goles a Favor (descendente)
     const filasOrdenadas = filas.sort((a, b) => {
         const puntosA = parseInt(a.dataset.puntos) || 0;
         const puntosB = parseInt(b.dataset.puntos) || 0;
         
+        // 1º Criterio: PUNTOS
         if (puntosB !== puntosA) {
             return puntosB - puntosA; // Descendente por puntos
         }
         
-        // Si empatan en puntos, ordenar por GD
+        // 2º Criterio: GD (Gol Diferencia)
         const gdA = parseInt(a.dataset.gd) || 0;
         const gdB = parseInt(b.dataset.gd) || 0;
-        return gdB - gdA; // Descendente por GD
+        
+        if (gdB !== gdA) {
+            return gdB - gdA; // Descendente por GD
+        }
+        
+        // 3º Criterio: GF (Goles a Favor)
+        const gfA = parseInt(a.dataset.gf) || 0;
+        const gfB = parseInt(b.dataset.gf) || 0;
+        
+        return gfB - gfA; // Descendente por GF
     });
     
     // Reordenar en el DOM

@@ -235,30 +235,38 @@ function agregarFilaGoleadores() {
     
     const nuevaFila = document.createElement('tr');
     
-    // Columna # (numeración automática)
+    // Columna # (numeración automática - será renumerada al ordenar)
     const tdNumero = document.createElement('td');
     tdNumero.textContent = tbody.querySelectorAll('tr').length + 1;
     tdNumero.contentEditable = false;
+    tdNumero.setAttribute('data-no-editable', 'true');
+    tdNumero.style.textAlign = 'center';
+    tdNumero.style.fontWeight = 'bold';
     nuevaFila.appendChild(tdNumero);
     
-    // Columna Jugador (con selector y placeholder con imagen)
+    // Columna Jugador (con selector modal - muestra foto y nombre)
     const tdJugador = document.createElement('td');
     tdJugador.innerHTML = `<img src="CampeonatoElectronicaimg/feups2.png" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:#999;">Haz clic para seleccionar</span>`;
     tdJugador.style.cursor = 'pointer';
+    tdJugador.contentEditable = false;
+    tdJugador.setAttribute('data-jugador-cell', 'true');
+    tdJugador.setAttribute('data-no-editable', 'true');
     tdJugador.addEventListener('click', () => mostrarModalSeleccionJugador(tdJugador));
     nuevaFila.appendChild(tdJugador);
     
-    // Columna Equipo (se llenará automáticamente)
+    // Columna Equipo (se llena automáticamente al seleccionar jugador)
     const tdEquipo = document.createElement('td');
     tdEquipo.textContent = '';
     tdEquipo.contentEditable = false;
+    tdEquipo.setAttribute('data-no-editable', 'true');
     nuevaFila.appendChild(tdEquipo);
     
-    // Columna Goles (editable)
+    // Columna Goles (editable - determina el orden)
     const tdGoles = document.createElement('td');
     tdGoles.textContent = '0';
     tdGoles.contentEditable = true;
     tdGoles.classList.add('editando');
+    tdGoles.style.textAlign = 'center';
     nuevaFila.appendChild(tdGoles);
     
     // Botón eliminar
@@ -531,12 +539,29 @@ async function poblarTablaConDatos(tablaId, datos) {
                         }
                     }
                     
+                    // Mostrar foto + nombre con estilo blanco
                     td.innerHTML = `<img src="${fotoJugador}" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:white;">${nombreJugador}</span>`;
+                    td.style.cursor = 'pointer';
+                    td.contentEditable = false;
                     
-                    // Agregar event listener para abrir modal en modo edición
+                    // Marcar como celda de jugador para identificación posterior
                     td.setAttribute('data-jugador-cell', 'true');
+                    td.setAttribute('data-no-editable', 'true');
+                } else if ((tablaId === 'goleadores' || tablaId === 'sancionados') && key.toLowerCase() === 'equipo') {
+                    // Columna Equipo - no editable, se llena automáticamente
+                    td.textContent = filaObj[key] || '';
+                    td.contentEditable = false;
+                    td.setAttribute('data-no-editable', 'true');
                 } else {
                     td.textContent = filaObj[key] || '';
+                    
+                    // Si es columna # en goleadores, marcar como no editable
+                    if ((tablaId === 'goleadores' || tablaId === 'posiciones') && idx === 0) {
+                        td.contentEditable = false;
+                        td.setAttribute('data-no-editable', 'true');
+                        td.style.textAlign = 'center';
+                        td.style.fontWeight = 'bold';
+                    }
                 }
                 fila.appendChild(td);
             });

@@ -326,6 +326,12 @@ async function guardarCambios(tablaId) {
     }
     
     const tabla = document.getElementById(`tabla${tablaId.charAt(0).toUpperCase() + tablaId.slice(1)}`);
+    
+    // Si es tabla de posiciones, calcular y ordenar antes de obtener datos
+    if (tablaId === 'posiciones') {
+        calcularYOrdenarPosiciones(tabla);
+    }
+    
     const datos = obtenerDatosTabla(tabla);
     
     try {
@@ -957,6 +963,87 @@ function cerrarModalJugador() {
         modal.style.display = 'none';
     }
     celdaActual = null;
+}
+
+// 🔹 CALCULAR Y ORDENAR TABLA DE POSICIONES
+function calcularYOrdenarPosiciones(tabla) {
+    console.log("📊 Calculando PJ, PUNTOS, GD y ordenando tabla de posiciones...");
+    
+    // Obtener índices de columnas
+    const encabezados = Array.from(tabla.querySelectorAll('thead th')).map(th => th.textContent.trim());
+    const idxPG = encabezados.indexOf('PG');
+    const idxPE = encabezados.indexOf('PE');
+    const idxPP = encabezados.indexOf('PP');
+    const idxPJ = encabezados.indexOf('PJ');
+    const idxGF = encabezados.indexOf('GF');
+    const idxGC = encabezados.indexOf('GC');
+    const idxGD = encabezados.indexOf('GD');
+    const idxPuntos = encabezados.indexOf('PUNTOS');
+    
+    // Procesar cada fila
+    const tbody = tabla.querySelector('tbody');
+    const filas = Array.from(tbody.querySelectorAll('tr'));
+    
+    filas.forEach(fila => {
+        const celdas = fila.querySelectorAll('td');
+        
+        // Obtener valores
+        const pg = parseInt(celdas[idxPG]?.textContent || '0') || 0;
+        const pe = parseInt(celdas[idxPE]?.textContent || '0') || 0;
+        const pp = parseInt(celdas[idxPP]?.textContent || '0') || 0;
+        const gf = parseInt(celdas[idxGF]?.textContent || '0') || 0;
+        const gc = parseInt(celdas[idxGC]?.textContent || '0') || 0;
+        
+        // Calcular PJ = PG + PE + PP
+        const pj = pg + pe + pp;
+        if (celdas[idxPJ]) {
+            celdas[idxPJ].textContent = pj;
+        }
+        
+        // Calcular PUNTOS = PG*3 + PE*1
+        const puntos = (pg * 3) + (pe * 1);
+        if (celdas[idxPuntos]) {
+            celdas[idxPuntos].textContent = puntos;
+        }
+        
+        // Calcular GD = GF - GC
+        const gd = gf - gc;
+        if (celdas[idxGD]) {
+            celdas[idxGD].textContent = gd;
+        }
+        
+        // Guardar valores para ordenamiento
+        fila.dataset.puntos = puntos;
+        fila.dataset.gd = gd;
+    });
+    
+    // Ordenar filas: primero por PUNTOS (descendente), luego por GD (descendente)
+    const filasOrdenadas = filas.sort((a, b) => {
+        const puntosA = parseInt(a.dataset.puntos) || 0;
+        const puntosB = parseInt(b.dataset.puntos) || 0;
+        
+        if (puntosB !== puntosA) {
+            return puntosB - puntosA; // Descendente por puntos
+        }
+        
+        // Si empatan en puntos, ordenar por GD
+        const gdA = parseInt(a.dataset.gd) || 0;
+        const gdB = parseInt(b.dataset.gd) || 0;
+        return gdB - gdA; // Descendente por GD
+    });
+    
+    // Reordenar en el DOM
+    tbody.innerHTML = '';
+    filasOrdenadas.forEach((fila, index) => {
+        // Actualizar número de posición
+        const celdaPosicion = fila.querySelector('td');
+        if (celdaPosicion) {
+            celdaPosicion.textContent = index + 1;
+        }
+        tbody.appendChild(fila);
+    });
+    
+    console.log("✅ Tabla de posiciones calculada y ordenada");
 }
 
 window.mostrarModalSeleccionJugador = mostrarModalSeleccionJugador;

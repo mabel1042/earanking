@@ -98,7 +98,7 @@ function activarEdicionTabla(tablaId) {
     const columnasCalculadas = [];
     if (tablaId === 'posiciones') {
         const idxPJ = encabezados.indexOf('PJ');
-        const idxPUNTOS = encabezados.indexOf('PUNTOS');
+        const idxPUNTOS = encabezados.findIndex(h => h.toLowerCase() === 'puntos');
         const idxGD = encabezados.indexOf('GD');
         
         if (idxPJ !== -1) columnasCalculadas.push(idxPJ);

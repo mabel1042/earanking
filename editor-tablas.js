@@ -114,10 +114,9 @@ function activarEdicionTabla(tablaId) {
         // Para posiciones, deshabilitar columnas calculadas
         if (tablaId === 'posiciones' && columnasCalculadas.includes(celda.cellIndex)) {
             celda.contentEditable = false;
-            celda.style.backgroundColor = '#e9ecef';
             celda.style.cursor = 'not-allowed';
-            celda.style.color = '#6c757d';
             celda.setAttribute('data-no-editable', 'true');
+            celda.setAttribute('data-calculada', 'true');
             celda.title = 'Esta columna se calcula automáticamente';
         }
         // Para goleadores y sancionados, agregar evento especial en columna de jugador

@@ -939,14 +939,6 @@ td[editando]:focus, th[editando]:focus {
     box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
 }
 
-/* Estilos para columnas calculadas automáticamente (no editables) */
-td[data-no-editable="true"]:not(.numero-posicion):not([data-jugador-cell]) {
-    background-color: #e9ecef !important;
-    color: #6c757d !important;
-    cursor: not-allowed !important;
-    font-style: italic;
-}
-
 /* Mantener estilos especiales durante edición */
 .numero-posicion[editando] {
     background-color: #e9ecef !important;

@@ -94,11 +94,34 @@ function activarEdicionTabla(tablaId) {
     const encabezados = Array.from(tabla.querySelectorAll('thead th')).map(th => th.textContent.trim());
     const idxJugador = encabezados.indexOf('Jugador');
     
+    // Para tabla de posiciones, identificar columnas calculadas automáticamente
+    const columnasCalculadas = [];
+    if (tablaId === 'posiciones') {
+        const idxPJ = encabezados.indexOf('PJ');
+        const idxPUNTOS = encabezados.indexOf('PUNTOS');
+        const idxGD = encabezados.indexOf('GD');
+        
+        if (idxPJ !== -1) columnasCalculadas.push(idxPJ);
+        if (idxPUNTOS !== -1) columnasCalculadas.push(idxPUNTOS);
+        if (idxGD !== -1) columnasCalculadas.push(idxGD);
+        
+        console.log(`🔒 Columnas auto-calculadas (no editables): ${columnasCalculadas.map(i => encabezados[i]).join(', ')}`);
+    }
+    
     // Hacer solo las celdas del cuerpo editables (no los encabezados ni la columna de equipos)
     const celdasCuerpo = tabla.querySelectorAll('tbody td:not([data-no-editable])');
     celdasCuerpo.forEach(celda => {
+        // Para posiciones, deshabilitar columnas calculadas
+        if (tablaId === 'posiciones' && columnasCalculadas.includes(celda.cellIndex)) {
+            celda.contentEditable = false;
+            celda.style.backgroundColor = '#e9ecef';
+            celda.style.cursor = 'not-allowed';
+            celda.style.color = '#6c757d';
+            celda.setAttribute('data-no-editable', 'true');
+            celda.title = 'Esta columna se calcula automáticamente';
+        }
         // Para goleadores y sancionados, agregar evento especial en columna de jugador
-        if ((tablaId === 'goleadores' || tablaId === 'sancionados') && celda.cellIndex === idxJugador) {
+        else if ((tablaId === 'goleadores' || tablaId === 'sancionados') && celda.cellIndex === idxJugador) {
             celda.contentEditable = false; // No editable directamente
             celda.style.cursor = 'pointer';
             celda.addEventListener('click', () => mostrarModalSeleccionJugador(celda));

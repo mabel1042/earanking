@@ -231,6 +231,12 @@ function agregarFilaGoleadores() {
     
     const nuevaFila = document.createElement('tr');
     
+    // Columna # (numeración automática)
+    const tdNumero = document.createElement('td');
+    tdNumero.textContent = tbody.querySelectorAll('tr').length + 1;
+    tdNumero.contentEditable = false;
+    nuevaFila.appendChild(tdNumero);
+    
     // Columna Jugador (con selector)
     const tdJugador = document.createElement('td');
     tdJugador.textContent = 'Haz clic para seleccionar';
@@ -330,6 +336,11 @@ async function guardarCambios(tablaId) {
     // Si es tabla de posiciones, calcular y ordenar antes de obtener datos
     if (tablaId === 'posiciones') {
         calcularYOrdenarPosiciones(tabla);
+    }
+    
+    // Si es tabla de goleadores, ordenar antes de obtener datos
+    if (tablaId === 'goleadores') {
+        ordenarGoleadores(tabla);
     }
     
     const datos = obtenerDatosTabla(tabla);
@@ -491,9 +502,12 @@ async function poblarTablaConDatos(tablaId, datos) {
             const fila = document.createElement('tr');
             (Array.isArray(datos.encabezados) && datos.encabezados.length > 0 ? datos.encabezados : Array.from(thead.querySelectorAll('th')).map(th => th.textContent)).forEach((key, idx) => {
                 const td = document.createElement('td');
-                // Si es la primera columna (numeración)
-                if (tablaId === 'posiciones' && idx === 0) {
+                // Si es la primera columna (numeración) en posiciones o goleadores
+                if ((tablaId === 'posiciones' || tablaId === 'goleadores') && idx === 0) {
                     td.textContent = (i + 1).toString();
+                    if (tablaId === 'posiciones') {
+                        td.classList.add('numero-posicion');
+                    }
                 } else if (tablaId === 'posiciones' && (key.toLowerCase() === 'equipo' || key.toLowerCase() === 'nombre')) {
                     // Buscar logo y nombre desde la colección 'equipos'
                     const nombreEquipo = filaObj[key] || '';
@@ -1044,6 +1058,45 @@ function calcularYOrdenarPosiciones(tabla) {
     });
     
     console.log("✅ Tabla de posiciones calculada y ordenada");
+}
+
+// 🔹 ORDENAR TABLA DE GOLEADORES
+function ordenarGoleadores(tabla) {
+    console.log("⚽ Ordenando tabla de goleadores por cantidad de goles...");
+    
+    // Obtener índices de columnas
+    const encabezados = Array.from(tabla.querySelectorAll('thead th')).map(th => th.textContent.trim());
+    const idxGoles = encabezados.indexOf('Goles');
+    
+    const tbody = tabla.querySelector('tbody');
+    const filas = Array.from(tbody.querySelectorAll('tr'));
+    
+    // Guardar valores de goles para ordenamiento
+    filas.forEach(fila => {
+        const celdas = fila.querySelectorAll('td');
+        const goles = parseInt(celdas[idxGoles]?.textContent || '0') || 0;
+        fila.dataset.goles = goles;
+    });
+    
+    // Ordenar filas por goles (descendente)
+    const filasOrdenadas = filas.sort((a, b) => {
+        const golesA = parseInt(a.dataset.goles) || 0;
+        const golesB = parseInt(b.dataset.goles) || 0;
+        return golesB - golesA; // Descendente
+    });
+    
+    // Reordenar en el DOM
+    tbody.innerHTML = '';
+    filasOrdenadas.forEach((fila, index) => {
+        // Actualizar número de posición en la primera columna
+        const celdaPosicion = fila.querySelector('td');
+        if (celdaPosicion) {
+            celdaPosicion.textContent = index + 1;
+        }
+        tbody.appendChild(fila);
+    });
+    
+    console.log("✅ Tabla de goleadores ordenada");
 }
 
 window.mostrarModalSeleccionJugador = mostrarModalSeleccionJugador;

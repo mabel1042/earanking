@@ -391,17 +391,20 @@ function obtenerDatosTabla(tabla) {
     const ths = tabla.querySelectorAll('thead th');
     datos.encabezados = Array.from(ths).map(th => th.textContent);
     
+    console.log('📋 Encabezados de la tabla:', datos.encabezados);
+    
     // Obtener filas
     const filas = tabla.querySelectorAll('tbody tr');
-    filas.forEach(fila => {
-        const celdas = fila.querySelectorAll('td:not(.btn-eliminar-fila):not([data-no-editable="true"])'); 
-        // Solo incluir celdas que NO sean botones de eliminar
-        const todasLasCeldas = fila.querySelectorAll('td');
+    filas.forEach((fila, filaIdx) => {
+        const todasLasCeldas = Array.from(fila.querySelectorAll('td'));
         const filaObj = {};
         
         todasLasCeldas.forEach((td, idx) => {
             // Saltar si es botón de eliminar
-            if (td.querySelector('.btn-eliminar-fila')) return;
+            if (td.querySelector('.btn-eliminar-fila')) {
+                console.log(`⏭️ Saltando celda de botón eliminar en índice ${idx}`);
+                return;
+            }
             
             const key = datos.encabezados[idx] || `col${idx+1}`;
             
@@ -419,6 +422,7 @@ function obtenerDatosTabla(tabla) {
                 );
                 
                 if (esPlaceholder) {
+                    console.log(`⚠️ Fila ${filaIdx}, Columna "${key}": Placeholder detectado - NO se guardará`);
                     // No guardar si es placeholder
                     filaObj[key] = '';
                     filaObj[key + '_foto'] = '';
@@ -432,16 +436,23 @@ function obtenerDatosTabla(tabla) {
                         rutaImagen = 'CampeonatoElectronicaimg/' + rutaImagen.split('CampeonatoElectronicaimg/')[1];
                     }
                     
+                    console.log(`✅ Fila ${filaIdx}, Columna "${key}": Guardando "${texto}" con foto "${rutaImagen}"`);
+                    
                     filaObj[key] = texto;
                     filaObj[key + '_foto'] = rutaImagen;
                 }
             } else {
-                filaObj[key] = td.textContent.trim();
+                const valor = td.textContent.trim();
+                console.log(`📝 Fila ${filaIdx}, Columna "${key}": "${valor}"`);
+                filaObj[key] = valor;
             }
         });
+        
+        console.log(`📦 Fila ${filaIdx} completa:`, filaObj);
         datos.filas.push(filaObj);
     });
     
+    console.log('💾 Datos finales a guardar:', datos);
     return datos;
 }
 

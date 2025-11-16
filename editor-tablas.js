@@ -394,25 +394,47 @@ function obtenerDatosTabla(tabla) {
     // Obtener filas
     const filas = tabla.querySelectorAll('tbody tr');
     filas.forEach(fila => {
-        const celdas = fila.querySelectorAll('td'); // CAMBIO: Obtener TODAS las celdas
+        const celdas = fila.querySelectorAll('td:not(.btn-eliminar-fila):not([data-no-editable="true"])'); 
+        // Solo incluir celdas que NO sean botones de eliminar
+        const todasLasCeldas = fila.querySelectorAll('td');
         const filaObj = {};
-        celdas.forEach((td, idx) => {
+        
+        todasLasCeldas.forEach((td, idx) => {
+            // Saltar si es botón de eliminar
+            if (td.querySelector('.btn-eliminar-fila')) return;
+            
             const key = datos.encabezados[idx] || `col${idx+1}`;
+            
             // Si la celda contiene una imagen (columna de equipos o jugador con foto)
             if (td.querySelector('img')) {
                 const img = td.querySelector('img');
                 const span = td.querySelector('span');
-                const texto = span ? span.textContent : td.textContent.trim().replace(/\s+/g, ' ');
                 
-                // Guardar tanto el texto como la URL de la foto (convertir a ruta relativa)
-                let rutaImagen = img.src;
-                // Convertir URL absoluta a relativa
-                if (rutaImagen.includes('CampeonatoElectronicaimg/')) {
-                    rutaImagen = 'CampeonatoElectronicaimg/' + rutaImagen.split('CampeonatoElectronicaimg/')[1];
+                // Verificar si es placeholder (color gris)
+                const esPlaceholder = span && (
+                    span.style.color === '#999' || 
+                    span.style.color === 'rgb(153, 153, 153)' ||
+                    span.textContent.includes('Haz clic para seleccionar') ||
+                    span.textContent.includes('Sin nombre')
+                );
+                
+                if (esPlaceholder) {
+                    // No guardar si es placeholder
+                    filaObj[key] = '';
+                    filaObj[key + '_foto'] = '';
+                } else {
+                    const texto = span ? span.textContent.trim() : td.textContent.trim().replace(/\s+/g, ' ');
+                    
+                    // Guardar tanto el texto como la URL de la foto (convertir a ruta relativa)
+                    let rutaImagen = img.src;
+                    // Convertir URL absoluta a relativa
+                    if (rutaImagen.includes('CampeonatoElectronicaimg/')) {
+                        rutaImagen = 'CampeonatoElectronicaimg/' + rutaImagen.split('CampeonatoElectronicaimg/')[1];
+                    }
+                    
+                    filaObj[key] = texto;
+                    filaObj[key + '_foto'] = rutaImagen;
                 }
-                
-                filaObj[key] = texto;
-                filaObj[key + '_foto'] = rutaImagen;
             } else {
                 filaObj[key] = td.textContent.trim();
             }
@@ -530,6 +552,9 @@ async function poblarTablaConDatos(tablaId, datos) {
                     const nombreJugador = filaObj[key] || '';
                     let fotoJugador = filaObj[key + '_foto'] || 'CampeonatoElectronicaimg/feups2.png';
                     
+                    console.log(`🔍 DEBUG Jugador - Nombre: "${nombreJugador}", Foto: "${fotoJugador}"`);
+                    console.log(`🔍 DEBUG filaObj completo:`, filaObj);
+                    
                     // Limpiar URL: convertir absoluta a relativa
                     if (fotoJugador.includes('127.0.0.1') || fotoJugador.includes('localhost')) {
                         if (fotoJugador.includes('CampeonatoElectronicaimg/')) {
@@ -539,8 +564,14 @@ async function poblarTablaConDatos(tablaId, datos) {
                         }
                     }
                     
-                    // Mostrar foto + nombre con estilo blanco
-                    td.innerHTML = `<img src="${fotoJugador}" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:white;">${nombreJugador}</span>`;
+                    // Si no hay nombre, mostrar placeholder
+                    if (!nombreJugador || nombreJugador.trim() === '') {
+                        td.innerHTML = `<img src="CampeonatoElectronicaimg/feups2.png" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:#999;">Sin nombre</span>`;
+                    } else {
+                        // Mostrar foto + nombre con estilo blanco
+                        td.innerHTML = `<img src="${fotoJugador}" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:white;">${nombreJugador}</span>`;
+                    }
+                    
                     td.style.cursor = 'pointer';
                     td.contentEditable = false;
                     

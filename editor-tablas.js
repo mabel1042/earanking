@@ -237,11 +237,10 @@ function agregarFilaGoleadores() {
     tdNumero.contentEditable = false;
     nuevaFila.appendChild(tdNumero);
     
-    // Columna Jugador (con selector)
+    // Columna Jugador (con selector y placeholder con imagen)
     const tdJugador = document.createElement('td');
-    tdJugador.textContent = 'Haz clic para seleccionar';
+    tdJugador.innerHTML = `<img src="CampeonatoElectronicaimg/feups2.png" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:#999;">Haz clic para seleccionar</span>`;
     tdJugador.style.cursor = 'pointer';
-    tdJugador.style.color = '#999';
     tdJugador.addEventListener('click', () => mostrarModalSeleccionJugador(tdJugador));
     nuevaFila.appendChild(tdJugador);
     
@@ -960,11 +959,19 @@ function seleccionarJugador(nombreJugador, nombreEquipo, fotoJugador) {
         celdaActual.innerHTML = `<img src="${fotoJugador}" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:white;">${nombreJugador}</span>`;
         celdaActual.style.color = 'white';
         
-        // Buscar la celda de equipo (siguiente columna)
+        // Buscar la celda de equipo (siguiente columna después de Jugador)
         const fila = celdaActual.parentElement;
-        const celdaEquipo = fila.cells[1]; // Segunda columna (Equipo)
-        if (celdaEquipo) {
-            celdaEquipo.textContent = nombreEquipo;
+        const celdas = fila.querySelectorAll('td');
+        
+        // Encontrar el índice de la columna Jugador
+        const tabla = fila.closest('table');
+        const encabezados = Array.from(tabla.querySelectorAll('thead th')).map(th => th.textContent.trim());
+        const idxJugador = encabezados.indexOf('Jugador');
+        const idxEquipo = encabezados.indexOf('Equipo');
+        
+        // Actualizar celda de Equipo
+        if (idxEquipo !== -1 && celdas[idxEquipo]) {
+            celdas[idxEquipo].textContent = nombreEquipo;
         }
     }
     

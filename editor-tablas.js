@@ -829,13 +829,38 @@ async function cargarTablaPosicionesDesdeEquipos() {
         
         console.log('📦 Mapa de datos guardados:', datosGuardados);
         
-        // Ordenar equipos por PG (Partidos Ganados) si existe
+        // Ordenar equipos por PUNTOS → GD → GF (igual que al guardar)
         equipos.sort((a, b) => {
             const keyA = normalizarNombreEquipo(a.nombre);
             const keyB = normalizarNombreEquipo(b.nombre);
+            
+            // Calcular PUNTOS para cada equipo
             const pgA = Number(datosGuardados[keyA]?.['PG'] || datosGuardados[keyA]?.['pg'] || 0);
+            const peA = Number(datosGuardados[keyA]?.['PE'] || datosGuardados[keyA]?.['pe'] || 0);
+            const puntosA = (pgA * 3) + (peA * 1);
+            
             const pgB = Number(datosGuardados[keyB]?.['PG'] || datosGuardados[keyB]?.['pg'] || 0);
-            return pgB - pgA;
+            const peB = Number(datosGuardados[keyB]?.['PE'] || datosGuardados[keyB]?.['pe'] || 0);
+            const puntosB = (pgB * 3) + (peB * 1);
+            
+            // 1º Criterio: PUNTOS
+            if (puntosB !== puntosA) {
+                return puntosB - puntosA;
+            }
+            
+            // 2º Criterio: GD (Gol Diferencia)
+            const gdA = Number(datosGuardados[keyA]?.['GD'] || datosGuardados[keyA]?.['gd'] || 0);
+            const gdB = Number(datosGuardados[keyB]?.['GD'] || datosGuardados[keyB]?.['gd'] || 0);
+            
+            if (gdB !== gdA) {
+                return gdB - gdA; // Descendente (de mayor positivo a menor negativo)
+            }
+            
+            // 3º Criterio: GF (Goles a Favor)
+            const gfA = Number(datosGuardados[keyA]?.['GF'] || datosGuardados[keyA]?.['gf'] || 0);
+            const gfB = Number(datosGuardados[keyB]?.['GF'] || datosGuardados[keyB]?.['gf'] || 0);
+            
+            return gfB - gfA;
         });
         
         // Generar filas para cada equipo

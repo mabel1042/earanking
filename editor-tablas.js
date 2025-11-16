@@ -90,11 +90,15 @@ function activarEdicionTabla(tablaId) {
     // Quitar edición anterior si existe
     cancelarEdicion(tablaId);
     
+    // Obtener encabezados para identificar columnas
+    const encabezados = Array.from(tabla.querySelectorAll('thead th')).map(th => th.textContent.trim());
+    const idxJugador = encabezados.indexOf('Jugador');
+    
     // Hacer solo las celdas del cuerpo editables (no los encabezados ni la columna de equipos)
     const celdasCuerpo = tabla.querySelectorAll('tbody td:not([data-no-editable])');
     celdasCuerpo.forEach(celda => {
         // Para goleadores y sancionados, agregar evento especial en columna de jugador
-        if ((tablaId === 'goleadores' || tablaId === 'sancionados') && celda.cellIndex === 0) {
+        if ((tablaId === 'goleadores' || tablaId === 'sancionados') && celda.cellIndex === idxJugador) {
             celda.contentEditable = false; // No editable directamente
             celda.style.cursor = 'pointer';
             celda.addEventListener('click', () => mostrarModalSeleccionJugador(celda));
@@ -528,6 +532,9 @@ async function poblarTablaConDatos(tablaId, datos) {
                     }
                     
                     td.innerHTML = `<img src="${fotoJugador}" alt="Foto" style="width:30px; height:30px; object-fit:cover; border-radius:50%; margin-right:5px; vertical-align:middle;"> <span style="color:white;">${nombreJugador}</span>`;
+                    
+                    // Agregar event listener para abrir modal en modo edición
+                    td.setAttribute('data-jugador-cell', 'true');
                 } else {
                     td.textContent = filaObj[key] || '';
                 }

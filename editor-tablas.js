@@ -1152,6 +1152,8 @@ function calcularYOrdenarPosiciones(tabla) {
         fila.dataset.puntos = puntos;
         fila.dataset.gd = gd;
         fila.dataset.gf = gf;
+        
+        console.log(`🔢 Fila ${celdas[1]?.textContent}: PUNTOS=${puntos}, GD=${gd}, GF=${gf}`);
     });
     
     // Ordenar filas con criterios de desempate:
@@ -1159,25 +1161,25 @@ function calcularYOrdenarPosiciones(tabla) {
     // 2º GD - Gol Diferencia (descendente)
     // 3º GF - Goles a Favor (descendente)
     const filasOrdenadas = filas.sort((a, b) => {
-        const puntosA = parseInt(a.dataset.puntos) || 0;
-        const puntosB = parseInt(b.dataset.puntos) || 0;
+        const puntosA = Number(a.dataset.puntos) || 0;
+        const puntosB = Number(b.dataset.puntos) || 0;
         
         // 1º Criterio: PUNTOS
         if (puntosB !== puntosA) {
             return puntosB - puntosA; // Descendente por puntos
         }
         
-        // 2º Criterio: GD (Gol Diferencia)
-        const gdA = parseInt(a.dataset.gd) || 0;
-        const gdB = parseInt(b.dataset.gd) || 0;
+        // 2º Criterio: GD (Gol Diferencia) - usar Number() para manejar negativos correctamente
+        const gdA = Number(a.dataset.gd);
+        const gdB = Number(b.dataset.gd);
         
         if (gdB !== gdA) {
-            return gdB - gdA; // Descendente por GD
+            return gdB - gdA; // Descendente por GD (de mayor positivo a menor negativo)
         }
         
         // 3º Criterio: GF (Goles a Favor)
-        const gfA = parseInt(a.dataset.gf) || 0;
-        const gfB = parseInt(b.dataset.gf) || 0;
+        const gfA = Number(a.dataset.gf) || 0;
+        const gfB = Number(b.dataset.gf) || 0;
         
         return gfB - gfA; // Descendente por GF
     });

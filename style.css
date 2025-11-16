@@ -646,6 +646,36 @@ body {
   text-align: center;
 }
 
+/* Estilos específicos para tabla de goleadores */
+#tablaGoleadores {
+  table-layout: auto !important; /* Permitir ancho variable */
+}
+
+#tablaGoleadores th:nth-child(1),
+#tablaGoleadores td:nth-child(1) {
+  width: 5%; /* Columna # - angosta */
+  text-align: center;
+  font-weight: bold;
+}
+
+#tablaGoleadores th:nth-child(2),
+#tablaGoleadores td:nth-child(2) {
+  width: 40%; /* Columna Jugador - más ancha para foto + nombre */
+  text-align: left;
+}
+
+#tablaGoleadores th:nth-child(3),
+#tablaGoleadores td:nth-child(3) {
+  width: 35%; /* Columna Equipo */
+  text-align: left;
+}
+
+#tablaGoleadores th:nth-child(4),
+#tablaGoleadores td:nth-child(4) {
+  width: 20%; /* Columna Goles */
+  text-align: center;
+}
+
 /* TABLAS JUGADORES Y FORMULARIOS */
 #tablaJugadores {
   width: 100%;

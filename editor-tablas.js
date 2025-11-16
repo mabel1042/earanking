@@ -368,7 +368,12 @@ async function guardarCambios(tablaId) {
         
         console.log(`💾 Datos guardados en Firebase para ${tablaId}:`, datos);
         alert(`✅ Cambios en ${tablaId} guardados correctamente en Firebase`);
+        
+        // Cancelar edición
         cancelarEdicion(tablaId);
+        
+        // Recargar datos desde Firebase para asegurar sincronización
+        await cargarDatosTabla(tablaId);
         
         // Si se guardaron horarios, recargar tabla de resultados
         if (tablaId === 'horarios') {
@@ -502,16 +507,29 @@ async function poblarTablaConDatos(tablaId, datos) {
     if (!tabla) return;
     const thead = tabla.querySelector('thead');
     const tbody = tabla.querySelector('tbody');
-    // Poblar encabezados SOLO si existen en los datos
-    if (thead && Array.isArray(datos.encabezados) && datos.encabezados.length > 0) {
-        const filaEncabezado = thead.querySelector('tr');
-        filaEncabezado.innerHTML = '';
-        datos.encabezados.forEach(encabezado => {
-            const th = document.createElement('th');
-            th.textContent = encabezado;
-            filaEncabezado.appendChild(th);
-        });
+    
+    // Para goleadores y sancionados, NUNCA sobrescribir encabezados - usar siempre los del HTML
+    // Esto asegura que la columna # siempre esté presente
+    if (tablaId === 'goleadores' || tablaId === 'sancionados') {
+        console.log(`📌 Tabla ${tablaId}: Manteniendo encabezados del HTML`);
+        // No tocar los encabezados - mantener los del HTML
+    } else {
+        // Para otras tablas, poblar encabezados SOLO si existen en los datos
+        if (thead && Array.isArray(datos.encabezados) && datos.encabezados.length > 0) {
+            const filaEncabezado = thead.querySelector('tr');
+            filaEncabezado.innerHTML = '';
+            datos.encabezados.forEach(encabezado => {
+                const th = document.createElement('th');
+                th.textContent = encabezado;
+                filaEncabezado.appendChild(th);
+            });
+        }
     }
+    
+    // Obtener encabezados actuales (del HTML o de datos)
+    const encabezadosActuales = Array.from(thead.querySelectorAll('th')).map(th => th.textContent.trim());
+    console.log(`📋 Encabezados actuales en ${tablaId}:`, encabezadosActuales);
+    
     // Poblar filas
     if (tbody && Array.isArray(datos.filas) && datos.filas.length > 0) {
         tbody.innerHTML = '';
@@ -530,13 +548,13 @@ async function poblarTablaConDatos(tablaId, datos) {
             }
         }
         let filasOrdenadas = datos.filas;
-        if (tablaId === 'posiciones' && Array.isArray(datos.encabezados)) {
+        if (tablaId === 'posiciones' && Array.isArray(encabezadosActuales)) {
             // Ordenar por GP descendente
-            const idxGP = datos.encabezados.findIndex(e => e.toLowerCase() === 'gp');
+            const idxGP = encabezadosActuales.findIndex(e => e.toLowerCase() === 'gp');
             if (idxGP !== -1) {
                 filasOrdenadas = [...datos.filas].sort((a, b) => {
-                    const gpA = Number(a['GP'] || a['gp'] || a[datos.encabezados[idxGP]] || 0);
-                    const gpB = Number(b['GP'] || b['gp'] || b[datos.encabezados[idxGP]] || 0);
+                    const gpA = Number(a['GP'] || a['gp'] || a[encabezadosActuales[idxGP]] || 0);
+                    const gpB = Number(b['GP'] || b['gp'] || b[encabezadosActuales[idxGP]] || 0);
                     return gpB - gpA;
                 });
             }
@@ -544,7 +562,7 @@ async function poblarTablaConDatos(tablaId, datos) {
         for (let i = 0; i < filasOrdenadas.length; i++) {
             const filaObj = filasOrdenadas[i];
             const fila = document.createElement('tr');
-            (Array.isArray(datos.encabezados) && datos.encabezados.length > 0 ? datos.encabezados : Array.from(thead.querySelectorAll('th')).map(th => th.textContent)).forEach((key, idx) => {
+            encabezadosActuales.forEach((key, idx) => {
                 const td = document.createElement('td');
                 // Si es la primera columna (numeración) en posiciones o goleadores
                 if ((tablaId === 'posiciones' || tablaId === 'goleadores') && idx === 0) {

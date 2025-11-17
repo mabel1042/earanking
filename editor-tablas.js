@@ -1024,6 +1024,10 @@ async function mostrarModalSeleccionJugador(celda) {
         modal.innerHTML = `
             <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
                 <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Seleccionar Jugador</h2>
+                <div style="margin-bottom: 1rem;">
+                    <input type="text" id="buscadorJugadores" placeholder="🔍 Buscar jugador o equipo..." 
+                           style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; font-family: 'Montserrat', Arial, sans-serif;">
+                </div>
                 <div id="listaJugadoresModal" style="display: flex; flex-direction: column; gap: 0.5rem;">
                     <p style="text-align: center; color: #666;">Cargando jugadores...</p>
                 </div>
@@ -1036,6 +1040,14 @@ async function mostrarModalSeleccionJugador(celda) {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) cerrarModalJugador();
         });
+        
+        // Agregar event listener al buscador
+        setTimeout(() => {
+            const buscador = document.getElementById('buscadorJugadores');
+            if (buscador) {
+                buscador.addEventListener('input', filtrarJugadores);
+            }
+        }, 100);
     }
     
     // Mostrar modal
@@ -1079,6 +1091,8 @@ async function cargarJugadoresEnModal() {
             
             const jugadorCard = document.createElement('div');
             jugadorCard.className = 'jugador-card-modal';
+            jugadorCard.setAttribute('data-jugador', jugador.nombre.toLowerCase());
+            jugadorCard.setAttribute('data-equipo', equipo.nombre.toLowerCase());
             jugadorCard.style.cssText = `
                 display: flex;
                 align-items: center;
@@ -1120,6 +1134,44 @@ async function cargarJugadoresEnModal() {
     } catch (error) {
         console.error("Error cargando jugadores:", error);
         listaContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar jugadores</p>';
+    }
+}
+
+// 🔹 Función para filtrar jugadores
+function filtrarJugadores() {
+    const buscador = document.getElementById('buscadorJugadores');
+    const listaContainer = document.getElementById('listaJugadoresModal');
+    
+    if (!buscador || !listaContainer) return;
+    
+    const textoBusqueda = buscador.value.toLowerCase().trim();
+    const jugadoresCards = listaContainer.querySelectorAll('.jugador-card-modal');
+    
+    let jugadoresVisibles = 0;
+    
+    jugadoresCards.forEach(card => {
+        const textoCard = card.textContent.toLowerCase();
+        
+        if (textoCard.includes(textoBusqueda)) {
+            card.style.display = 'flex';
+            jugadoresVisibles++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    // Mostrar mensaje si no hay resultados
+    const mensajeNoResultados = listaContainer.querySelector('.no-resultados');
+    if (jugadoresVisibles === 0 && jugadoresCards.length > 0) {
+        if (!mensajeNoResultados) {
+            const mensaje = document.createElement('p');
+            mensaje.className = 'no-resultados';
+            mensaje.style.cssText = 'text-align: center; color: #999; padding: 1rem;';
+            mensaje.textContent = 'No se encontraron jugadores';
+            listaContainer.appendChild(mensaje);
+        }
+    } else if (mensajeNoResultados) {
+        mensajeNoResultados.remove();
     }
 }
 

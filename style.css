@@ -1370,6 +1370,16 @@ td.columna-posicion[editando] {
   background: #218838;
 }
 
+/* Buscador de jugadores en modal */
+#buscadorJugadores {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#buscadorJugadores:focus {
+  outline: none;
+  border-color: #2d6cdf;
+  box-shadow: 0 0 0 3px rgba(45, 108, 223, 0.1);
+}
 
 /* Botón guardar */
 .btn-guardar-horario {

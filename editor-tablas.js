@@ -161,10 +161,64 @@ function activarEdicionTabla(tablaId) {
     // Agregar botones de control simplificados
     agregarControlesEdicion(tabla, tablaId);
     
+    // Para tabla de posiciones, agregar cálculo automático en tiempo real
+    if (tablaId === 'posiciones') {
+        agregarCalculoAutomaticoTiempoReal(tabla);
+    }
+    
     // Agregar event listeners para navegación tipo Excel
     agregarNavegacionExcel(tabla);
     
     console.log(`✅ Modo edición activado para: ${tablaId}`);
+}
+
+// 🔹 Cálculo automático en tiempo real para tabla de posiciones
+function agregarCalculoAutomaticoTiempoReal(tabla) {
+    const encabezados = Array.from(tabla.querySelectorAll('thead th')).map(th => th.textContent.trim());
+    const idxPG = encabezados.indexOf('PG');
+    const idxPE = encabezados.indexOf('PE');
+    const idxPP = encabezados.indexOf('PP');
+    const idxPJ = encabezados.indexOf('PJ');
+    const idxGF = encabezados.indexOf('GF');
+    const idxGC = encabezados.indexOf('GC');
+    const idxGD = encabezados.indexOf('GD');
+    const idxPuntos = encabezados.findIndex(h => h.toLowerCase() === 'puntos');
+    
+    // Agregar event listener a todas las celdas editables
+    const celdasEditables = tabla.querySelectorAll('tbody td.editando');
+    celdasEditables.forEach(celda => {
+        celda.addEventListener('input', function() {
+            const fila = this.parentElement;
+            const celdas = Array.from(fila.querySelectorAll('td'));
+            
+            // Obtener valores actuales
+            const pg = parseInt(celdas[idxPG]?.textContent || '0') || 0;
+            const pe = parseInt(celdas[idxPE]?.textContent || '0') || 0;
+            const pp = parseInt(celdas[idxPP]?.textContent || '0') || 0;
+            const gf = parseInt(celdas[idxGF]?.textContent || '0') || 0;
+            const gc = parseInt(celdas[idxGC]?.textContent || '0') || 0;
+            
+            // Calcular PJ = PG + PE + PP
+            const pj = pg + pe + pp;
+            if (idxPJ !== -1 && celdas[idxPJ]) {
+                celdas[idxPJ].textContent = pj;
+            }
+            
+            // Calcular PUNTOS = PG*3 + PE*1
+            const puntos = (pg * 3) + (pe * 1);
+            if (idxPuntos !== -1 && celdas[idxPuntos]) {
+                celdas[idxPuntos].textContent = puntos;
+            }
+            
+            // Calcular GD = GF - GC
+            const gd = gf - gc;
+            if (idxGD !== -1 && celdas[idxGD]) {
+                celdas[idxGD].textContent = gd;
+            }
+        });
+    });
+    
+    console.log('🔄 Cálculo automático en tiempo real activado para tabla de posiciones');
 }
 
 // 🔹 Agregar controles de edición SIMPLIFICADOS (solo guardar y cancelar)

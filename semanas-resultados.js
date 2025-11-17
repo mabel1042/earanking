@@ -1,8 +1,8 @@
-import { db } from './firebase-config.js';
 import { collection, doc, getDoc, setDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 // 🔹 Cargar semanas de resultados desde Firebase
 export async function cargarSemanasResultados() {
+    const db = window.db;
     if (!db) {
         console.log("⏳ Base de datos no lista, reintentando...");
         setTimeout(cargarSemanasResultados, 1000);
@@ -106,6 +106,12 @@ window.toggleSemana = function(index) {
 
 // 🔹 Guardar semanas en Firebase
 async function guardarSemanas(semanas) {
+    const db = window.db;
+    if (!db) {
+        console.error("❌ Base de datos no disponible");
+        return;
+    }
+    
     try {
         const docRef = doc(collection(db, "tablasTorneo"), 'semanas-resultados');
         await setDoc(docRef, { semanas });
@@ -121,6 +127,12 @@ export function activarEdicionSemanas() {
     if (!btnEditar) return;
 
     btnEditar.addEventListener('click', async () => {
+        const db = window.db;
+        if (!db) {
+            alert("❌ Base de datos no disponible");
+            return;
+        }
+        
         const contenedor = document.getElementById('semanasResultados');
         if (!contenedor) return;
 

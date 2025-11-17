@@ -676,6 +676,17 @@ body {
   text-align: center;
 }
 
+/* Estilos específicos para tabla de sancionados */
+#tablaSancionados th:nth-child(3),
+#tablaSancionados td:nth-child(3),
+#tablaSancionados th:nth-child(4),
+#tablaSancionados td:nth-child(4) {
+  width: 60px; /* Columnas de tarjetas amarillas y rojas - estrechas */
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 0.3rem;
+}
+
 /* TABLAS JUGADORES Y FORMULARIOS */
 #tablaJugadores {
   width: 100%;

@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, setDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { collection, doc, getDoc, setDoc, getDocs } from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js';
 
 // 🔹 Cargar semanas de resultados desde Firebase
 export async function cargarSemanasResultados() {

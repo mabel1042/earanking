@@ -441,9 +441,12 @@ async function cargarJugadores(equipoId) {
   const tablaJugadores = document.getElementById('tablaJugadores')?.querySelector('tbody');
   if (!tablaJugadores) return;
   
-  // Agregar columna de acciones en el encabezado si es admin
+  // Verificar si es admin o capitán
+  const puedeEditar = esAdmin || capitanLogueado;
+  
+  // Agregar columna de acciones en el encabezado si puede editar
   const thead = document.getElementById('tablaJugadores')?.querySelector('thead tr');
-  if (thead && esAdmin && !thead.querySelector('.th-acciones')) {
+  if (thead && puedeEditar && !thead.querySelector('.th-acciones')) {
     const thAcciones = document.createElement('th');
     thAcciones.className = 'th-acciones';
     thAcciones.textContent = 'Acciones';
@@ -457,7 +460,7 @@ async function cargarJugadores(equipoId) {
     const snapshot = await getDocs(q);
     
     if (snapshot.empty) {
-      tablaJugadores.innerHTML = `<tr><td colspan="${esAdmin ? '5' : '4'}" style="text-align: center; color: black;">No hay jugadores registrados</td></tr>`;
+      tablaJugadores.innerHTML = `<tr><td colspan="${puedeEditar ? '5' : '4'}" style="text-align: center; color: black;">No hay jugadores registrados</td></tr>`;
       return;
     }
 
@@ -469,7 +472,7 @@ async function cargarJugadores(equipoId) {
         <td>${data.nombre}</td>
         <td>${data.edad}</td>
         <td>${data.numero}</td>
-        ${esAdmin ? `<td>
+        ${puedeEditar ? `<td>
           <button class="btn-editar-jugador" data-id="${doc.id}" data-nombre="${data.nombre}" data-edad="${data.edad}" data-numero="${data.numero}" data-foto="${data.foto || ''}" style="background:#2d6cdf;color:white;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;margin-right:0.8rem;">✏️</button>
           <button class="btn-eliminar-jugador" data-id="${doc.id}" data-nombre="${data.nombre}" style="background:#dc3545;color:white;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;">🗑️</button>
         </td>` : ''}
@@ -478,7 +481,7 @@ async function cargarJugadores(equipoId) {
     });
     
     // Agregar event listeners para botones de editar y eliminar jugador
-    if (esAdmin) {
+    if (puedeEditar) {
       const botonesEditar = tablaJugadores.querySelectorAll('.btn-editar-jugador');
       botonesEditar.forEach(btn => {
         btn.addEventListener('click', () => {

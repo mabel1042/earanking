@@ -138,6 +138,40 @@
     </div>
   </div>
 
+  <!-- Modal Editar Jugador -->
+  <div class="modal-bg" id="modalEditarJugador" style="display:none;">
+    <div class="modal-content">
+      <h2>Editar Jugador</h2>
+      <form id="formEditarJugador">
+        <div class="form-group">
+          <label for="editarNombreJugador">Nombre:</label>
+          <input type="text" id="editarNombreJugador" placeholder="Nombre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="editarEdadJugador">Edad:</label>
+          <input type="number" id="editarEdadJugador" placeholder="Edad" required>
+        </div>
+
+        <div class="form-group">
+          <label for="editarNumeroJugador">Número:</label>
+          <input type="number" id="editarNumeroJugador" placeholder="Número" required>
+        </div>
+
+        <div class="form-group">
+          <label for="editarFotoJugador">Cambiar Foto (opcional):</label>
+          <input type="file" id="editarFotoJugador" accept="image/*">
+          <div id="fotoActualPreview" style="margin-top: 0.5rem;">
+            <!-- Aquí se mostrará la foto actual -->
+          </div>
+        </div>
+
+        <button type="submit" class="btn-login">Guardar Cambios</button>
+      </form>
+      <button id="closeModalEditarJugador" class="btn-close">Cancelar</button>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script type="module" src="script.js"></script>
 

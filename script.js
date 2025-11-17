@@ -1,7 +1,7 @@
 
 // 🔹 Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, doc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, deleteDoc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-storage.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
@@ -469,13 +469,28 @@ async function cargarJugadores(equipoId) {
         <td>${data.nombre}</td>
         <td>${data.edad}</td>
         <td>${data.numero}</td>
-        ${esAdmin ? '<td><button class="btn-eliminar-jugador" data-id="' + doc.id + '" data-nombre="' + data.nombre + '" style="background:#dc3545;color:white;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;">🗑️</button></td>' : ''}
+        ${esAdmin ? `<td>
+          <button class="btn-editar-jugador" data-id="${doc.id}" data-nombre="${data.nombre}" data-edad="${data.edad}" data-numero="${data.numero}" data-foto="${data.foto || ''}" style="background:#2d6cdf;color:white;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;margin-right:0.3rem;">✏️</button>
+          <button class="btn-eliminar-jugador" data-id="${doc.id}" data-nombre="${data.nombre}" style="background:#dc3545;color:white;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;">🗑️</button>
+        </td>` : ''}
       `;
       tablaJugadores.appendChild(row);
     });
     
-    // Agregar event listeners para botones de eliminar jugador
+    // Agregar event listeners para botones de editar y eliminar jugador
     if (esAdmin) {
+      const botonesEditar = tablaJugadores.querySelectorAll('.btn-editar-jugador');
+      botonesEditar.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const jugadorId = btn.dataset.id;
+          const jugadorNombre = btn.dataset.nombre;
+          const jugadorEdad = btn.dataset.edad;
+          const jugadorNumero = btn.dataset.numero;
+          const jugadorFoto = btn.dataset.foto;
+          abrirModalEditarJugador(jugadorId, jugadorNombre, jugadorEdad, jugadorNumero, jugadorFoto, equipoId);
+        });
+      });
+      
       const botonesEliminar = tablaJugadores.querySelectorAll('.btn-eliminar-jugador');
       botonesEliminar.forEach(btn => {
         btn.addEventListener('click', async () => {
@@ -620,6 +635,98 @@ async function eliminarJugador(jugadorId, equipoId) {
     alert("❌ Error al eliminar el jugador");
   }
 }
+
+// 🔹 Variables globales para edición de jugador
+let jugadorEditandoId = null;
+let equipoEditandoId = null;
+
+// 🔹 Función para abrir modal de editar jugador
+function abrirModalEditarJugador(jugadorId, nombre, edad, numero, foto, equipoId) {
+  jugadorEditandoId = jugadorId;
+  equipoEditandoId = equipoId;
+  
+  const modal = document.getElementById('modalEditarJugador');
+  const form = document.getElementById('formEditarJugador');
+  
+  // Llenar el formulario con los datos actuales
+  document.getElementById('editarNombreJugador').value = nombre;
+  document.getElementById('editarEdadJugador').value = edad;
+  document.getElementById('editarNumeroJugador').value = numero;
+  
+  // Mostrar foto actual
+  const fotoPreview = document.getElementById('fotoActualPreview');
+  if (foto) {
+    fotoPreview.innerHTML = `
+      <p style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem;">Foto actual:</p>
+      <img src="${foto}" alt="Foto actual" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
+    `;
+  } else {
+    fotoPreview.innerHTML = '<p style="font-size: 0.85rem; color: #666;">Sin foto actual</p>';
+  }
+  
+  modal.style.display = 'flex';
+}
+
+// 🔹 Event listener para cerrar modal de editar jugador
+document.getElementById('closeModalEditarJugador')?.addEventListener('click', () => {
+  document.getElementById('modalEditarJugador').style.display = 'none';
+  document.getElementById('formEditarJugador').reset();
+  jugadorEditandoId = null;
+  equipoEditandoId = null;
+});
+
+// 🔹 Event listener para el formulario de editar jugador
+document.getElementById('formEditarJugador')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  if (!jugadorEditandoId || !equipoEditandoId) {
+    alert("Error: No se pudo identificar el jugador a editar");
+    return;
+  }
+  
+  const nombre = document.getElementById('editarNombreJugador').value;
+  const edad = parseInt(document.getElementById('editarEdadJugador').value);
+  const numero = parseInt(document.getElementById('editarNumeroJugador').value);
+  const fotoInput = document.getElementById('editarFotoJugador');
+  
+  try {
+    // Preparar datos a actualizar
+    const datosActualizar = {
+      nombre,
+      edad,
+      numero
+    };
+    
+    // Si se seleccionó una nueva foto, subirla
+    if (fotoInput.files && fotoInput.files[0]) {
+      const file = fotoInput.files[0];
+      const storageRef = ref(storage, `jugadores/${Date.now()}_${file.name}`);
+      await uploadBytes(storageRef, file);
+      const fotoURL = await getDownloadURL(storageRef);
+      datosActualizar.foto = fotoURL;
+    }
+    
+    // Actualizar en Firestore
+    await updateDoc(doc(db, "jugadores", jugadorEditandoId), datosActualizar);
+    
+    alert("✅ Jugador actualizado correctamente");
+    
+    // Cerrar modal y resetear
+    document.getElementById('modalEditarJugador').style.display = 'none';
+    document.getElementById('formEditarJugador').reset();
+    
+    // Recargar tabla de jugadores
+    cargarJugadores(equipoEditandoId);
+    
+    // Limpiar variables
+    jugadorEditandoId = null;
+    equipoEditandoId = null;
+    
+  } catch (error) {
+    console.error("Error actualizando jugador:", error);
+    alert("❌ Error al actualizar el jugador");
+  }
+});
 
 // Esta función ya no es necesaria - la tabla de posiciones se carga desde editor-tablas.js
 async function cargarTablaPosiciones() {

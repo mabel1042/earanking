@@ -472,9 +472,9 @@ async function cargarJugadores(equipoId) {
         <td>${data.nombre}</td>
         <td>${data.edad}</td>
         <td>${data.numero}</td>
-        ${puedeEditar ? `<td>
-          <button class="btn-editar-jugador" data-id="${doc.id}" data-nombre="${data.nombre}" data-edad="${data.edad}" data-numero="${data.numero}" data-foto="${data.foto || ''}" style="background:#2d6cdf;color:white;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;margin-right:0.8rem;">✏️</button>
-          <button class="btn-eliminar-jugador" data-id="${doc.id}" data-nombre="${data.nombre}" style="background:#dc3545;color:white;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;">🗑️</button>
+        ${puedeEditar ? `<td style="white-space: nowrap;">
+          <button class="btn-editar-jugador" data-id="${doc.id}" data-nombre="${data.nombre}" data-edad="${data.edad}" data-numero="${data.numero}" data-foto="${data.foto || ''}" style="background:#2d6cdf;color:white;border:none;padding:0.4rem 0.6rem;border-radius:4px;cursor:pointer;margin-right:0.5rem;">✏️</button>
+          <button class="btn-eliminar-jugador" data-id="${doc.id}" data-nombre="${data.nombre}" style="background:#dc3545;color:white;border:none;padding:0.4rem 0.6rem;border-radius:4px;cursor:pointer;">🗑️</button>
         </td>` : ''}
       `;
       tablaJugadores.appendChild(row);

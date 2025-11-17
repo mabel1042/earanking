@@ -1224,7 +1224,7 @@ td.columna-posicion[editando] {
 .semana-content {
   margin-top: 0.5rem;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, #00295e 0%, #1e5bb8 100%);
   border-radius: 8px;
 }
 
@@ -1237,21 +1237,22 @@ td.columna-posicion[editando] {
 .tabla-resultados-semana td {
   padding: 0.8rem;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
 }
 
 .tabla-resultados-semana th {
-  background: #00295e;
+  background: rgba(0, 0, 0, 0.3);
   color: white;
   font-weight: bold;
 }
 
 .tabla-resultados-semana tbody tr:nth-child(even) {
-  background: #f9f9f9;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .tabla-resultados-semana tbody tr:hover {
-  background: #e3f2fd;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Estilos para modo edición de semanas */

@@ -1184,6 +1184,191 @@ td.columna-posicion[editando] {
   font-size: 1.1rem;
 }
 
+/* Estilos para semanas de resultados */
+.semana-container {
+  margin-bottom: 1rem;
+}
+
+.semana-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #00295e 0%, #1e90ff 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.semana-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 41, 94, 0.3);
+}
+
+.semana-titulo {
+  flex: 1;
+  text-align: left;
+}
+
+.semana-toggle {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.semana-content {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+}
+
+.tabla-resultados-semana {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-resultados-semana th,
+.tabla-resultados-semana td {
+  padding: 0.8rem;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.tabla-resultados-semana th {
+  background: #00295e;
+  color: white;
+  font-weight: bold;
+}
+
+.tabla-resultados-semana tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.tabla-resultados-semana tbody tr:hover {
+  background: #e3f2fd;
+}
+
+/* Estilos para modo edición de semanas */
+.btn-editar-semanas {
+  background: #2d6cdf;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.btn-editar-semanas:hover {
+  background: #1e5bb8;
+}
+
+.edicion-semana {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 2px solid #00295e;
+}
+
+.input-titulo-semana {
+  flex: 1;
+  padding: 0.7rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.input-titulo-semana:focus {
+  outline: none;
+  border-color: #2d6cdf;
+}
+
+.btn-editar-semana-individual,
+.btn-eliminar-semana {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.btn-editar-semana-individual {
+  background: #2d6cdf;
+  color: white;
+}
+
+.btn-editar-semana-individual:hover {
+  background: #1e5bb8;
+}
+
+.btn-eliminar-semana {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-eliminar-semana:hover {
+  background: #c82333;
+}
+
+.tabla-edicion-resultados {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.tabla-edicion-resultados th,
+.tabla-edicion-resultados td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+}
+
+.tabla-edicion-resultados th {
+  background: #00295e;
+  color: white;
+  font-weight: bold;
+}
+
+.tabla-edicion-resultados input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.tabla-edicion-resultados input:focus {
+  outline: none;
+  border-color: #2d6cdf;
+}
+
+.btn-agregar-resultado {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.btn-agregar-resultado:hover {
+  background: #218838;
+}
+
 
 /* Botón guardar */
 .btn-guardar-horario {

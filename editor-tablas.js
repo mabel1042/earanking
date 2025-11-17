@@ -59,6 +59,13 @@ function actualizarBotonesEdicion() {
         btn.style.display = mostrar;
         console.log(`🔧 Botón ${btn.dataset.tabla}: ${mostrar}`);
     });
+    
+    // También actualizar botón de gestionar semanas
+    const btnSemanas = document.querySelector('.btn-editar-semanas');
+    if (btnSemanas) {
+        btnSemanas.style.display = esAdmin ? 'block' : 'none';
+        console.log(`🔧 Botón gestionar semanas: ${esAdmin ? 'visible' : 'oculto'}`);
+    }
 }
 
 // 🔹 Activar modo edición

@@ -91,21 +91,14 @@
       </button>
       <div class="accordion-content">
         <!-- BOTÓN EDITAR (solo visible para admin) -->
-        <button class="btn-editar-tabla" data-tabla="resultados" style="display: none;">
-          ✏️ Editar Tabla
+        <button class="btn-editar-semanas" style="display: none;">
+          ✏️ Gestionar Semanas
         </button>
-        <table id="tablaResultados">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Partido 1</th>
-              <th>Resultado</th>
-              <th>Partido 2</th>
-              <th>Resultado</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        
+        <!-- Contenedor de semanas -->
+        <div id="semanasResultados">
+          <!-- Las semanas se cargarán dinámicamente aquí -->
+        </div>
       </div>
 
       <!-- Goleadores -->
@@ -199,6 +192,7 @@
   <!-- Después de tu script actual -->
   <script type="module" src="script.js"></script>
   <script type="module" src="editor-tablas.js"></script>
+  <script type="module" src="semanas-resultados.js"></script>
 
 </body>
 </html>

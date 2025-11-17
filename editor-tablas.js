@@ -130,14 +130,15 @@ function activarEdicionTabla(tablaId) {
         }
     });
     
-    // Agregar botones de eliminar a cada fila si es tabla de horarios
-    if (tablaId === 'horarios') {
+    // Agregar botones de eliminar a cada fila si es tabla de horarios o resultados
+    if (tablaId === 'horarios' || tablaId === 'resultados') {
         const filas = tabla.querySelectorAll('tbody tr');
         filas.forEach(fila => {
             // Solo agregar si no tiene ya el botón
             if (!fila.querySelector('.btn-eliminar-fila')) {
                 const tdEliminar = document.createElement('td');
-                tdEliminar.innerHTML = '<button onclick="eliminarFilaHorario(this)" class="btn-eliminar-fila" style="background:#dc3545;color:white;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;">🗑️</button>';
+                const funcionEliminar = tablaId === 'horarios' ? 'eliminarFilaHorario' : 'eliminarFilaResultados';
+                tdEliminar.innerHTML = `<button onclick="${funcionEliminar}(this)" class="btn-eliminar-fila" style="background:#dc3545;color:white;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;">🗑️</button>`;
                 tdEliminar.setAttribute('data-no-editable', 'true');
                 fila.appendChild(tdEliminar);
             }
@@ -232,6 +233,7 @@ function agregarControlesEdicion(tabla, tablaId) {
                 Modo edición: Solo puedes modificar los datos numéricos de las celdas
             </p>
             ${tablaId === 'horarios' ? '<button type="button" onclick="agregarFilaHorario()" class="btn-control btn-agregar-fila">➕ Agregar Fila</button>' : ''}
+            ${tablaId === 'resultados' ? '<button type="button" onclick="agregarFilaResultados()" class="btn-control btn-agregar-fila">➕ Agregar Resultado</button>' : ''}
             ${tablaId === 'goleadores' ? '<button type="button" onclick="agregarFilaGoleadores()" class="btn-control btn-agregar-fila">➕ Agregar Goleador</button>' : ''}
             ${tablaId === 'sancionados' ? '<button type="button" onclick="agregarFilaSancionados()" class="btn-control btn-agregar-fila">➕ Agregar Sancionado</button>' : ''}
         </div>
@@ -289,6 +291,44 @@ function eliminarFilaHorario(btn) {
         const fila = btn.closest('tr');
         fila.remove();
         console.log('✅ Fila eliminada de horarios');
+    }
+}
+
+// 🔹 Función para agregar fila en tabla de resultados
+function agregarFilaResultados() {
+    const tabla = document.getElementById('tablaResultados');
+    if (!tabla) return;
+    
+    const tbody = tabla.querySelector('tbody');
+    if (!tbody) return;
+    
+    const nuevaFila = document.createElement('tr');
+    const numColumnas = tabla.querySelectorAll('thead th').length;
+    
+    for (let i = 0; i < numColumnas; i++) {
+        const td = document.createElement('td');
+        td.textContent = '';
+        td.contentEditable = true;
+        td.classList.add('editando');
+        nuevaFila.appendChild(td);
+    }
+    
+    // Agregar botón de eliminar fila
+    const tdEliminar = document.createElement('td');
+    tdEliminar.innerHTML = '<button onclick="eliminarFilaResultados(this)" class="btn-eliminar-fila" style="background:#dc3545;color:white;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;">🗑️</button>';
+    tdEliminar.setAttribute('data-no-editable', 'true');
+    nuevaFila.appendChild(tdEliminar);
+    
+    tbody.appendChild(nuevaFila);
+    console.log('✅ Nueva fila agregada a resultados');
+}
+
+// 🔹 Función para eliminar fila en tabla de resultados
+function eliminarFilaResultados(btn) {
+    if (confirm('¿Estás seguro de eliminar esta fila?')) {
+        const fila = btn.closest('tr');
+        fila.remove();
+        console.log('✅ Fila eliminada de resultados');
     }
 }
 
@@ -451,11 +491,6 @@ async function guardarCambios(tablaId) {
         // Recargar datos desde Firebase para asegurar sincronización
         await cargarDatosTabla(tablaId);
         
-        // Si se guardaron horarios, recargar tabla de resultados
-        if (tablaId === 'horarios') {
-            await cargarDatosTabla('resultados');
-        }
-        
     } catch (error) {
         console.error("❌ Error al guardar en Firebase:", error);
         alert("❌ Error al guardar los datos en Firebase");
@@ -557,11 +592,8 @@ async function cargarDatosTabla(tablaId) {
         if (tablaId === 'posiciones') {
             // Para la tabla de posiciones, generar filas desde equipos
             await cargarTablaPosicionesDesdeEquipos();
-        } else if (tablaId === 'resultados') {
-            // Para la tabla de resultados, generar desde horarios
-            await cargarTablaResultadosDesdeHorarios();
         } else {
-            // Para otras tablas, cargar desde tablasTorneo
+            // Para todas las demás tablas, cargar desde tablasTorneo
             const docRef = doc(collection(db, "tablasTorneo"), tablaId);
             const docSnap = await getDoc(docRef);
             
@@ -717,16 +749,13 @@ function cancelarEdicion(tablaId) {
         celda.classList.remove('editando');
     });
     
-    // Remover botones de eliminar si es tabla de horarios
-    if (tablaId === 'horarios') {
+    // Remover botones de eliminar si es tabla de horarios o resultados
+    if (tablaId === 'horarios' || tablaId === 'resultados') {
         const botonesEliminar = tabla.querySelectorAll('.btn-eliminar-fila');
         botonesEliminar.forEach(btn => {
             const td = btn.closest('td');
             if (td) td.remove();
         });
-        
-        // Recargar tabla de resultados después de cancelar edición de horarios
-        cargarDatosTabla('resultados');
     }
     
     // Remover botones de eliminar si es tabla de goleadores o sancionados
@@ -956,74 +985,15 @@ async function cargarTablaPosicionesDesdeEquipos() {
     }
 }
 
-// 🔹 Cargar tabla de resultados desde horarios
-async function cargarTablaResultadosDesdeHorarios() {
-    const tabla = document.getElementById('tablaResultados');
-    if (!tabla) return;
-    
-    const tbody = tabla.querySelector('tbody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    
-    try {
-        // Obtener horarios guardados
-        const docRefHorarios = doc(collection(db, "tablasTorneo"), 'horarios');
-        const docSnapHorarios = await getDoc(docRefHorarios);
-        
-        if (!docSnapHorarios.exists() || !Array.isArray(docSnapHorarios.data().filas) || docSnapHorarios.data().filas.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;">No hay partidos programados</td></tr>';
-            return;
-        }
-        
-        const horariosFilas = docSnapHorarios.data().filas;
-        
-        // Obtener resultados guardados si existen
-        const docRefResultados = doc(collection(db, "tablasTorneo"), 'resultados');
-        const docSnapResultados = await getDoc(docRefResultados);
-        let resultadosGuardados = {};
-        
-        if (docSnapResultados.exists() && Array.isArray(docSnapResultados.data().filas)) {
-            docSnapResultados.data().filas.forEach(fila => {
-                const partido = fila['Partido'] || fila['partido'] || '';
-                resultadosGuardados[partido] = fila['Resultado'] || fila['resultado'] || '';
-            });
-        }
-        
-        // Generar filas de resultados basados en horarios
-        horariosFilas.forEach(horario => {
-            const fila = document.createElement('tr');
-            
-            // Columna Partido (no editable) - tomar del horario
-            const tdPartido = document.createElement('td');
-            const nombrePartido = horario['Partido'] || horario['partido'] || '';
-            tdPartido.textContent = nombrePartido;
-            tdPartido.setAttribute('data-no-editable', 'true');
-            fila.appendChild(tdPartido);
-            
-            // Columna Resultado (editable)
-            const tdResultado = document.createElement('td');
-            tdResultado.textContent = resultadosGuardados[nombrePartido] || '';
-            fila.appendChild(tdResultado);
-            
-            tbody.appendChild(fila);
-        });
-        
-        console.log(`✅ Tabla de resultados cargada con ${horariosFilas.length} partidos`);
-        
-    } catch (error) {
-        console.error("❌ Error cargando tabla de resultados desde horarios:", error);
-        tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:red;">Error al cargar la tabla</td></tr>';
-    }
-}
-
 // 🔹 Exportar funciones globales
 window.activarEdicionTabla = activarEdicionTabla;
 window.agregarFila = agregarFila;
 window.agregarFilaHorario = agregarFilaHorario;
+window.agregarFilaResultados = agregarFilaResultados;
 window.agregarFilaGoleadores = agregarFilaGoleadores;
 window.agregarFilaSancionados = agregarFilaSancionados;
 window.eliminarFilaHorario = eliminarFilaHorario;
+window.eliminarFilaResultados = eliminarFilaResultados;
 window.eliminarFilaGeneral = eliminarFilaGeneral;
 window.agregarColumna = agregarColumna;
 window.eliminarFila = eliminarFila;

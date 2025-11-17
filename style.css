@@ -716,6 +716,17 @@ body {
   border-radius: 6px;
 }
 
+/* Estilos para botones de acciones en tabla de jugadores */
+#tablaJugadores .btn-editar-jugador,
+#tablaJugadores .btn-eliminar-jugador {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#tablaJugadores td:last-child {
+  white-space: nowrap;
+}
+
 /* FORMULARIOS */
 #formJugador, #formEquipo {
   text-align: left;

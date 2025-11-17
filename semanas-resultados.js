@@ -3,6 +3,7 @@ import { collection, doc, getDoc, setDoc, getDocs } from 'https://www.gstatic.co
 // 🔹 Cargar semanas de resultados desde Firebase
 export async function cargarSemanasResultados() {
     const db = window.db;
+    console.log("🔍 Verificando db en cargarSemanasResultados:", db);
     if (!db) {
         console.log("⏳ Base de datos no lista, reintentando...");
         setTimeout(cargarSemanasResultados, 1000);
@@ -13,6 +14,7 @@ export async function cargarSemanasResultados() {
     if (!contenedor) return;
 
     try {
+        console.log("📋 Intentando cargar semanas desde Firebase...");
         const docRef = doc(collection(db, "tablasTorneo"), 'semanas-resultados');
         const docSnap = await getDoc(docRef);
 
@@ -136,13 +138,18 @@ export function activarEdicionSemanas() {
         const contenedor = document.getElementById('semanasResultados');
         if (!contenedor) return;
 
-        // Cargar semanas actuales
-        const docRef = doc(collection(db, "tablasTorneo"), 'semanas-resultados');
-        const docSnap = await getDoc(docRef);
-        let semanas = docSnap.exists() ? docSnap.data().semanas : [];
+        try {
+            // Cargar semanas actuales
+            const docRef = doc(collection(db, "tablasTorneo"), 'semanas-resultados');
+            const docSnap = await getDoc(docRef);
+            let semanas = docSnap.exists() ? docSnap.data().semanas : [];
 
-        // Mostrar modo edición
-        mostrarModoEdicionSemanas(semanas);
+            // Mostrar modo edición
+            mostrarModoEdicionSemanas(semanas);
+        } catch (error) {
+            console.error("❌ Error al cargar semanas para edición:", error);
+            alert("Error al cargar las semanas. Por favor intenta de nuevo.");
+        }
     });
 }
 

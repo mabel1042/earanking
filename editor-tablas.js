@@ -616,9 +616,9 @@ async function poblarTablaConDatos(tablaId, datos) {
     const thead = tabla.querySelector('thead');
     const tbody = tabla.querySelector('tbody');
     
-    // Para goleadores y sancionados, NUNCA sobrescribir encabezados - usar siempre los del HTML
-    // Esto asegura que la columna # siempre esté presente
-    if (tablaId === 'goleadores' || tablaId === 'sancionados') {
+    // Para goleadores, sancionados, horarios y resultados, NUNCA sobrescribir encabezados - usar siempre los del HTML
+    // Esto asegura que las columnas siempre estén presentes
+    if (tablaId === 'goleadores' || tablaId === 'sancionados' || tablaId === 'horarios' || tablaId === 'resultados') {
         console.log(`📌 Tabla ${tablaId}: Manteniendo encabezados del HTML`);
         // No tocar los encabezados - mantener los del HTML
     } else {
